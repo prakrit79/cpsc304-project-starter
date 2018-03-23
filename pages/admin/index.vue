@@ -1,15 +1,60 @@
 <template>
     <section class="users-view">
+        Admin Page
         <div class="content">
             <div class="subsection">
+                <div class="title">Locations:</div>
+                <ul style="list-style-type: none; padding: 0; margin: 0;">
+                    <li v-for="location in locations" style="padding: 10px 20px; margin: 0 25px; position: relative;">
+                        {{ location.clinicname }}
+                        <ul style="list-style-type: disc; padding: 0; margin: 8px;">
+                        Doctors:
+                        <li v-for="doctor in getDoctorsForLocation(location, doctors)" style="padding: 10px; margin: 0 25px;">
+                          {{ doctor.doctorname }}
+                        </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <div class="subsection">
+                <div class="title">Appointments:</div>
+                <ul style="list-style-type: none; padding: 0; margin: 0;">
+                    <li v-for="appointment in appointments" style="padding: 10px 20px; margin: 0 25px; position: relative;">
+                        {{ appointment }}
+                    </li>
+                </ul>
+            </div>
+            <div class="subsection">
+                <div class="title">Patients:</div>
+                <ul style="list-style-type: none; padding: 0; margin: 0;">
+                    <li v-for="patient in patients" style="padding: 10px 20px; margin: 0 25px; position: relative;">
+                        {{ patient }}
+                    </li>
+                </ul>
             </div>
         </div>
     </section>
 </template>
 
 <script>
-    export default {
+  import axios from '~/plugins/axios'
+
+  export default {
+    async asyncData () {
+      let {data} = await axios.get('/api/admin')
+      return {locations: data.locations, doctors: data.doctors, appointments: data.appointments, patients: data.patients}
+    },
+    methods: {
+      getDoctorsForLocation (location, doctors) {
+        return doctors.filter(doctor => location.address === doctor.address)
+      }
+    },
+    head () {
+      return {
+        title: 'Admin page'
+      }
     }
+  }
 </script>
 
 <style lang="stylus" scoped>
