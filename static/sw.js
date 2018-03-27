@@ -19,8 +19,8 @@ importScripts('workbox-sw.prod.v1.3.0.js');
  */
 const fileManifest = [
   {
-    "url": "/_nuxt/app.fe36b8ede4a0cc944e67.js",
-    "revision": "2c516f123b5e2a53bdd28ab9fd362d6e"
+    "url": "/_nuxt/app.1e189be2c363530181a0.js",
+    "revision": "88559c13e455c1c3be629f3a47bdf99f"
   },
   {
     "url": "/_nuxt/common.9e362092e843df8fe4a6.js",
@@ -31,8 +31,8 @@ const fileManifest = [
     "revision": "ceb92f8e08605168d3651a631d9abf27"
   },
   {
-    "url": "/_nuxt/manifest.b1ba47ce9c040b975d5d.js",
-    "revision": "4b0a4ecef6ced495ced806d68b06f10e"
+    "url": "/_nuxt/manifest.9abf391bf7f3315221f7.js",
+    "revision": "afd2be056509e25d888e2206df46b904"
   },
   {
     "url": "/_nuxt/pages/admin/index.ded0b366121824771572.js",
@@ -79,12 +79,12 @@ const fileManifest = [
     "revision": "d928ee4b1d019543e61240d3af8ed49c"
   },
   {
-    "url": "/_nuxt/pages/patient/prescription.aa4ed806d6bf711510a4.js",
-    "revision": "2bbb6170af4bb9f9b746d9e3b276aaee"
+    "url": "/_nuxt/pages/patient/prescription.799cfeb8ef0454ffce1a.js",
+    "revision": "5b140a4761cbed8ea3ca5190e4a1096c"
   },
   {
-    "url": "/_nuxt/pages/patient/referral.6a2648593fce3d8d0f3c.js",
-    "revision": "7d175e1e70b00e680ce09c082d5c1c95"
+    "url": "/_nuxt/pages/patient/referral.a01c41091b20da036e92.js",
+    "revision": "d8e6779f7910d1c2ebc60b867ed209d8"
   },
   {
     "url": "/_nuxt/pages/users/_username/index.d5e4e048eb48713f5f03.js",
