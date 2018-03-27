@@ -9,8 +9,9 @@
     "lint": "eslint --ext .js,.vue --ignore-path .gitignore .",
     "dev": "backpack dev",
     "build": "nuxt build && backpack build",
-    "start": "nuxt start",
-    "heroku-postbuild": "npm run build"  },
+    "start": "node main.js",
+    "heroku-postbuild": "npm run build"
+  },
   "dependencies": {
     "@nuxtjs/pwa": "^1.0.2",
     "axios": "^0.16.2",
