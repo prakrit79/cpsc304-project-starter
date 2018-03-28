@@ -429,5 +429,20 @@ router.get('/doctor/:username/appointment', function (req, res, next) {
         })
 })
 
+router.get('/doctor/atAddress/:address', function (req, res, next) {
+    const address = req.params.address
+    const query = 'SELECT * FROM doctor WHERE address = :address;'
+    connection.query(query,
+        {
+            type: connection.QueryTypes.SELECT,
+            replacements: {
+                address: address
+            }
+        })
+        .then(doctors => {
+            res.json(doctors)
+        })
+})
+
 
 export default router
