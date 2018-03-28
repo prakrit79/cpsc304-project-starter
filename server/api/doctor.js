@@ -213,7 +213,8 @@ router.get('/doctor/:username/appointment', function (req, res, next) {
 
 /* GET users listing. */
 router.get('/doctors', function (req, res, next) {
-    const query = 'SELECT * FROM doctor;'
+    // This query sorts doctors by least busy ie fewest appointments
+    const query = 'SELECT *, (SELECT COUNT(*) FROM appointments WHERE doctorid = d.doctorid) as count FROM doctor d ORDER BY count;'
     connection.query(query, { type: connection.QueryTypes.SELECT })
         .then(doctors => {
             res.json(doctors)
