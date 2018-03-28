@@ -95,12 +95,12 @@ const fileManifest = [
     "revision": "627e76d22b9d48804e03852d11f8e62b"
   },
   {
-    "url": "/_nuxt/manifest.578e13401df6d73c1c01.js",
-    "revision": "5a170ead8073a373bc24c616440261c4"
+    "url": "/_nuxt/manifest.0d0508959064984435a5.js",
+    "revision": "3c5bb497ca5c831848bccdaa4ee758be"
   },
   {
-    "url": "/_nuxt/nuxt.bundle.b9812d6579ea67ae7edd.js",
-    "revision": "ea94dbc9da123c518c440b093d8e26e8"
+    "url": "/_nuxt/nuxt.bundle.8a4319d319303601adb7.js",
+    "revision": "2cd02e5251c459baed08919098052055"
   },
   {
     "url": "/_nuxt/vendor.bundle.5833975c6b7ae9f86d18.js",

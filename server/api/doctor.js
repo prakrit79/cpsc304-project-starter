@@ -199,7 +199,6 @@ router.get('/doctors', function (req, res, next) {
 })
 
 router.get('/doctor/appointments/:doctorid/:date', bodyParser.json(), function (req, res, next) {
-    console.log(req.params)
     const doctorid = req.params.doctorid || -1
     const date = req.params.date || ''
 
