@@ -15,7 +15,7 @@ CREATE TABLE Location(
     PRIMARY KEY (address));
 
 CREATE TABLE Doctor(
-    doctorid int,
+    doctorid SERIAL,
     doctorname varchar(100),
     email varchar(50),
     phone varchar(20),
