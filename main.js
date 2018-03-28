@@ -126,7 +126,7 @@ app.use('/api', __WEBPACK_IMPORTED_MODULE_2__api__["a" /* default */]);
 
 // Import and Set Nuxt.js options
 var config = __webpack_require__(12);
-config.dev = !("production" === 'production');
+config.dev = !("development" === 'production');
 
 // Init Nuxt.js
 var nuxt = new __WEBPACK_IMPORTED_MODULE_1_nuxt__["Nuxt"](config);
@@ -502,7 +502,9 @@ router.post('/patient/updateAppointment/:patientid', bodyParser.json(), function
     var appointmentdatetime = req.body.data.appointmentdatetime;
     var timeFormat = "YYYY/MM/DD HH24:MI";
 
-    var query = 'UPDATE Appointments ' + 'SET doctorid = :doctorid, appointmentdatetime = TO_TIMESTAMP(:datetime, :timeFormat)' + 'WHERE patientid = :patientid AND appointmentdatetime = :appointmentdatetime;';
+    var query = 'UPDATE appointments ' + 'SET doctorid = :doctorid, appointmentdatetime = TO_TIMESTAMP(:datetime, :timeFormat)' + 'WHERE patientid = :patientid AND appointmentdatetime = :appointmentdatetime;';
+    //PostgreSQL does not support the CHECK command on UPDATE
+    // 'CHECK (datetime BETWEEN :today AND 2018-12-31 00:00:01);'
     connection.query(query, {
         type: connection.QueryTypes.INSERT,
         replacements: {
@@ -712,14 +714,14 @@ router.get('/doctor/:username/appointment', function (req, res, next) {
 
 /* GET users listing. */
 router.get('/doctors', function (req, res, next) {
-    var query = 'SELECT * FROM doctor;';
+    // This query sorts doctors by least busy ie fewest appointments
+    var query = 'SELECT *, (SELECT COUNT(*) FROM appointments WHERE doctorid = d.doctorid) as count FROM doctor d ORDER BY count;';
     connection.query(query, { type: connection.QueryTypes.SELECT }).then(function (doctors) {
         res.json(doctors);
     });
 });
 
 router.get('/doctor/appointments/:doctorid/:date', bodyParser.json(), function (req, res, next) {
-    console.log(req.params);
     var doctorid = req.params.doctorid || -1;
     var date = req.params.date || '';
 
