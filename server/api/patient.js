@@ -114,9 +114,11 @@ router.post('/patient/updateAppointment/:patientid', bodyParser.json(), function
     const timeFormat = "YYYY/MM/DD HH24:MI"
 
 
-    const query = 'UPDATE Appointments ' +
+    const query = 'UPDATE appointments ' +
         'SET doctorid = :doctorid, appointmentdatetime = TO_TIMESTAMP(:datetime, :timeFormat)' +
         'WHERE patientid = :patientid AND appointmentdatetime = :appointmentdatetime;'
+        //PostgreSQL does not support the CHECK command on UPDATE
+        // 'CHECK (datetime BETWEEN :today AND 2018-12-31 00:00:01);'
     connection.query(query, {
         type: connection.QueryTypes.INSERT,
         replacements: {
