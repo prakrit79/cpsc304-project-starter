@@ -19,8 +19,8 @@
     import axios from '~/plugins/axios'
     export default {
       middleware: 'check-patient',
-      async asyncData () {
-        let { data } = await axios.get('/api/patient/prescription/128')
+      async asyncData ({store}) {
+        let { data } = await axios.get('/api/patient/prescription/' + store.getters.getAuthUser.userid)
         return { prescriptionsAndDoctors: data }
       },
       head () {

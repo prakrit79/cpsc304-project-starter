@@ -5,7 +5,7 @@
                 <H3 >
                     Book New Appointment at:
                 </H3>
-                <div style="padding: 10px 20px; margin: 0 25px; position: relative; display: flex;" >
+                <div class="subsection" style="padding: 10px 20px; margin: 0 25px; position: relative; display: flex;" v-if="!show">
                     <button style="padding: 10px;" type="button" class="button--grey" v-on:click='getLocationDoctors(location.address)' v-for="(location, clinicname) in locations" :key="clinicname">{{location.clinicname}}</button>
                     <button style="padding: 10px;" type="button" class="button--grey" v-on:click='getAllDoctors()'>Any Location</button>
                 </div>
@@ -96,8 +96,10 @@
             data:
                     {
                       datetime: datetime
-                    }})
-          self.$nuxt.$router.go({ path: '/patient', force: true })
+                    }}).then(() => {
+            var index = this.appointments.findIndex(value => value.appointmentdatetime === datetime)
+            this.appointments.splice(index, 1)
+          })
         },
         deleteRecords (patientid) {
           axios.post('/api/patient/deleteRecords/' + this.$store.getters.getAuthUser.userid)

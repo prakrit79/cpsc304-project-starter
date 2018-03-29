@@ -14,6 +14,33 @@ router.get('/doctor', function (req, res, next) {
         })
 })
 
+/* GET Doctors  sorted by least busy. */
+router.get('/doctors', function (req, res, next) {
+    // This query sorts doctors by least busy ie fewest appointments
+    const query = 'SELECT *, (SELECT COUNT(*) FROM appointments WHERE doctorid = d.doctorid) as count FROM doctor d ORDER BY count;'
+    connection.query(query, { type: connection.QueryTypes.SELECT })
+        .then(doctors => {
+            res.json(doctors)
+        })
+})
+
+/* GET Doctors  that are free at datetime ie division query*/
+router.get('/doctorsfree/:datetime', function (req, res, next) {
+    const datetime = req.params.datetime;
+
+    const query = 'SELECT *, (SELECT COUNT(*) FROM appointments WHERE doctorid = d.doctorid) as count FROM doctor d  WHERE ' +
+        'NOT EXISTS (SELECT * from appointments WHERE doctorid = d.doctorid AND appointmentDateTime = :datetime) ORDER BY count;'
+    connection.query(query, {
+        type: connection.QueryTypes.SELECT,
+        replacements: {
+            datetime: datetime
+        }
+    })
+        .then(doctors => {
+            res.json(doctors)
+        })
+})
+
 router.post('/doctor/addRec', bodyParser.json(), function (req, res, next) {
     const recordID = req.body.data.recordID;
     const dateCreated = req.body.data.dateCreated;
@@ -183,15 +210,6 @@ router.get('/doctor/:username/appointment', function (req, res, next) {
         })
 })
 
-/* GET Doctors  sorted by least busy. */
-router.get('/doctors', function (req, res, next) {
-    // This query sorts doctors by least busy ie fewest appointments
-    const query = 'SELECT *, (SELECT COUNT(*) FROM appointments WHERE doctorid = d.doctorid) as count FROM doctor d ORDER BY count;'
-    connection.query(query, { type: connection.QueryTypes.SELECT })
-        .then(doctors => {
-            res.json(doctors)
-        })
-})
 
 router.get('/doctor/appointments/:doctorid/:date', bodyParser.json(), function (req, res, next) {
     const doctorid = req.params.doctorid || -1
