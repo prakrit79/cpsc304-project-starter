@@ -75,7 +75,7 @@
         update () {
           let self = this
 
-          axios.post('/api/patient/updateAppointment/143', {
+          axios.post('/api/patient/updateAppointment/' + this.$store.getters.getAuthUser.userid, {
             headers:
                     {
                       'Content-Type': 'application/json'

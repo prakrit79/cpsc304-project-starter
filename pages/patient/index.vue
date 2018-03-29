@@ -55,8 +55,8 @@
 
     export default {
 
-      async asyncData () {
-        let appointmentData = await axios.get('/api/patient/appointments/143')
+      async asyncData ({ store }) {
+        let appointmentData = await axios.get('/api/patient/appointments/' + store.getters.getAuthUser.userid)
         let doctorData = await axios.get('/api/doctors')
         let locationsData = await axios.get('/api/location')
         return { appointments: appointmentData.data, doctors: doctorData.data, locations: locationsData.data }
@@ -88,7 +88,7 @@
         },
 
         cancel (datetime) {
-          axios.post('/api/patient/cancelAppointment/143', {
+          axios.post('/api/patient/cancelAppointment/' + this.$store.getters.getAuthUser.userid, {
             headers:
                     {
                       'Content-Type': 'application/json'
@@ -100,11 +100,11 @@
           self.$nuxt.$router.go({ path: '/patient', force: true })
         },
         deleteRecords (patientid) {
-          axios.post('/api/patient/deleteRecords/153')
+          axios.post('/api/patient/deleteRecords/' + this.$store.getters.getAuthUser.userid)
           self.$nuxt.$router.go({ path: '../pages', force: true })
         },
         deleteAccount (patientid) {
-          axios.post('/api/patient/deleteAccount/153')
+          axios.post('/api/patient/deleteAccount/' + this.$store.getters.getAuthUser.userid)
           self.$nuxt.$router.go({ path: '../pages', force: true })
         }
       },
