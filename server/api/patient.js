@@ -88,28 +88,7 @@ router.post('/patient/makeAppointment/:patientid', bodyParser.json(), function (
     const duration = req.body.data.duration
     const timeFormat = "YYYY/MM/DD HH24:MI"
 
-    const query = 'INSERT INTO Appointments Values (:patientid, :doctorid, TO_TIMESTAMP(:datetime, :timeFormat), :duration)'
-    connection.query(query, {
-        type: connection.QueryTypes.INSERT,
-        replacements: {
-            patientid: patientid,
-            doctorid: doctorid,
-            datetime: datetime,
-            duration: duration,
-            timeFormat: timeFormat
-        }
-    })
-
-})
-
-router.post('/patient/makeAppointment/:patientid', bodyParser.json(), function (req, res, next) {
-    const patientid = req.params.patientid
-    const doctorid = req.body.data.doctorid
-    const datetime = req.body.data.date + ' ' + req.body.data.booktime
-    const duration = req.body.data.duration
-    const timeFormat = "YYYY/MM/DD HH24:MI"
-
-    const query = 'INSERT INTO Appointments Values (:patientid, :doctorid, TO_TIMESTAMP(:datetime, :timeFormat), :duration)'
+    const query = 'INSERT INTO appointments Values (:patientid, :doctorid, TO_TIMESTAMP(:datetime, :timeFormat), :duration)'
     connection.query(query, {
         type: connection.QueryTypes.INSERT,
         replacements: {
@@ -138,7 +117,7 @@ router.post('/patient/updateAppointment/:patientid', bodyParser.json(), function
         //PostgreSQL does not support the CHECK command on UPDATE
         // 'CHECK (datetime BETWEEN :today AND 2018-12-31 00:00:01);'
     connection.query(query, {
-        type: connection.QueryTypes.INSERT,
+        type: connection.QueryTypes.UPDATE,
         replacements: {
             patientid: patientid,
             doctorid: doctorid,
