@@ -42,7 +42,7 @@
     import axios from '~/plugins/axios'
 
     export default {
-
+      middleware: 'check-patient',
       data () {
         // build todays date variable
         var today = new Date()

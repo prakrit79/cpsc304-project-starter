@@ -38,6 +38,7 @@
     import axios from '~/plugins/axios'
 
     export default {
+      middleware: 'check-patient',
       async asyncData () {
         let doctorData = await axios.get('/api/doctors')
         return { doctors: doctorData.data }

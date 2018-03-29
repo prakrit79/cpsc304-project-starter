@@ -54,7 +54,7 @@
     import makeAppointment from './makeAppointment'
 
     export default {
-
+      middleware: 'check-patient',
       async asyncData ({ store }) {
         let appointmentData = await axios.get('/api/patient/appointments/' + store.getters.getAuthUser.userid)
         let doctorData = await axios.get('/api/doctors')

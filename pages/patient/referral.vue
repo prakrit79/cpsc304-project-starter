@@ -18,6 +18,7 @@
 <script>
     import axios from '~/plugins/axios'
     export default {
+      middleware: 'check-patient',
       async asyncData () {
         let { data } = await axios.get('/api/patient/referral/128')
         return {referralsAndDoctors: data}

@@ -44,11 +44,7 @@
   import axios from '~/plugins/axios'
 
   export default {
-    fetch ({ store, redirect }) {
-      if (!store.state.authUser || store.state.authUser.usertype !== 'admin') {
-        return redirect('/')
-      }
-    },
+    middleware: 'check-admin',
     async asyncData () {
       let {data} = await axios.get('/api/admin')
       return {locations: data.locations, doctors: data.doctors, appointments: data.appointments, patients: data.patients, specialists: data.specializations}

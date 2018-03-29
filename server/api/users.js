@@ -19,7 +19,6 @@ router.post('/login',bodyParser.json(), function (req, res) {
 
   if (user !== undefined && password === user.password) {
     req.session.authUser = {username: user.username, userid: user.userid, usertype: user.usertype}
-    console.log(req.session.authUser)
     return res.json({authUser: req.session.authUser})
   }
   res.status(401).json({ error: 'Bad credentials' })

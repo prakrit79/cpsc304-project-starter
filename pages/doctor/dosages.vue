@@ -41,8 +41,7 @@
     import axios from '~/plugins/axios'
 
     export default {
-
-      name: 'username',
+      middleware: 'check-doctor',
       async asyncData () {
         let dosagemax = await axios.get('/api/doctor/dosages')
         let dosagemin = await axios.get('/api/doctor/dosagesmin')

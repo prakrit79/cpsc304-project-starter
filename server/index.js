@@ -1,5 +1,5 @@
 import express from 'express'
-import session from 'express-session'
+import session from 'cookie-session'
 
 import { Nuxt, Builder } from 'nuxt'
 
@@ -13,7 +13,7 @@ app.use(session({
   secret: 'cpsc 304',
   resave: false,
   saveUninitialized: false,
-  cookie: { maxAge: 60000 }
+  cookie: { maxAge: 60000, httpOnly: false }
 }))
 
 app.set('port', port)

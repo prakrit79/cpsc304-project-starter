@@ -5,13 +5,13 @@ const bodyParser = require('body-parser')
 
 const router = Router()
 
-router.use((req, res, next) => {
-  if (req.session.authUser && req.session.authUser.usertype === 'admin') {
-    next()
-  } else {
-    res.status(401).json({ error: 'Bad credentials admin' })
-  }
-})
+// router.use((req, res, next) => {
+//   if (req.session.authUser && req.session.authUser.usertype === 'admin') {
+//     next()
+//   } else {
+//     res.status(401).json({ error: 'Bad credentials admin' })
+//   }
+// })
 
 router.get('/', function (req, res) {
   let locations = connection.query('SELECT * FROM location;', {type: connection.QueryTypes.SELECT})
@@ -19,7 +19,6 @@ router.get('/', function (req, res) {
   let appointments = connection.query('SELECT * FROM appointments;', {type: connection.QueryTypes.SELECT})
   let patients = connection.query('SELECT * FROM patient;', {type: connection.QueryTypes.SELECT})
   let specializations = connection.query('SELECT * FROM specialist;', {type: connection.QueryTypes.SELECT})
-
   Promise.all([locations, doctors, appointments, patients, specializations]).then((result) => {
     res.json({locations: result[0], doctors: result[1], appointments: result[2], patients: result[3], specializations: result[4]})
   })
