@@ -5,8 +5,9 @@
         <router-link to="/" exact>
           <img class="logo" src="~/assets/img/happy.png" alt="logo">
         </router-link>
-        <nuxt-link to="/users">Users</nuxt-link>
+        <nuxt-link to="/patient">Users</nuxt-link>
         <nuxt-link to="/doctor">Doctor</nuxt-link>
+        <nuxt-link to="/admin">Doctor</nuxt-link>
       </nav>
     </div>
   </div>

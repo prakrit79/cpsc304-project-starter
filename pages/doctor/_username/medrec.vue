@@ -29,10 +29,6 @@
                         <textarea type="text" v-model="summary" rows="10" cols="30"></textarea>
                     </div>
                     <div style="margin: 10px 0;">
-                        <span class="record-doctorid">Doctor ID: </span>
-                        <input type="number" v-model="doctorid"/>
-                    </div>
-                    <div style="margin: 10px 0;">
                         <span class="record-patientid">Patient ID: </span>
                         <input type="number" v-model="patientid"/>
                     </div>
@@ -52,7 +48,6 @@
           recordID: '',
           dateCreated: '',
           summary: '',
-          doctorid: '',
           patientid: ''
         }
       },
@@ -71,7 +66,6 @@
                           recordID: self.recordID,
                           dateCreated: self.dateCreated,
                           summary: self.summary,
-                          doctorid: self.doctorid,
                           patientid: self.patientid
                         }})
             .then((res) => {

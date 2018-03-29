@@ -8,7 +8,7 @@
                 <ul style="list-style-type: none; padding: 0; margin: 0;">
                     <li v-for="(patient, patientid) in prescriptions" :key="patientid" style="padding: 10px 20px; margin: 0 25px; position: relative;">
                         {{'Medication name: '+ patient.medicationname}} <br>
-                        {{'Dosage: ' + patient.dosage}}
+                        {{'Dosage(mg/day): ' + patient.dosage}}
                     </li>
                 </ul>
             </div>
@@ -23,10 +23,6 @@
                     <div style="margin: 10px 0;">
                         <span class="prescription-patientid">Patient ID: </span>
                         <input type="number" v-model="patientid"/>
-                    </div>
-                    <div style="margin: 10px 0;">
-                        <span class="prescription-doctorid">Doctor ID: </span>
-                        <input type="number" v-model="doctorid"/>
                     </div>
                     <div style="margin: 10px 0;">
                         <span class="prescription-medicationName">Medication Name: </span>
@@ -50,7 +46,6 @@
       data () {
         return {
           patientid: '',
-          doctorid: '',
           medicationName: '',
           dosage: ''
         }
@@ -68,7 +63,6 @@
             data:
                         {
                           patientid: self.patientid,
-                          doctorid: self.doctorid,
                           medicationName: self.medicationName,
                           dosage: self.dosage
                         }})
