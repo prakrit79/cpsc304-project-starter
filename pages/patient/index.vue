@@ -20,15 +20,16 @@
             </div>
             <div class="subsection">
                 <H3 >
+                <h3>
                     Referrals
-                    <nuxt-link type="button" class="button--grey" to="/patient/referral" style="postion: right;">View Referrals</nuxt-link>
-                </H3>
+                </h3>
+                    <nuxt-link class="button--grey link" to="/patient/referral">View Referrals</nuxt-link>
             </div>
             <div class="subsection">
                 <H3 >
                     Prescriptions
-                    <nuxt-link type="button" class="button--grey" to="/patient/prescription" style="flex: 10%">My Prescriptions</nuxt-link>
                 </H3>
+                <nuxt-link class="button--grey link" to="/patient/prescription">My Prescriptions</nuxt-link>
             </div>
         </div>
     </section>
@@ -101,9 +102,6 @@
         .title
             font-size 18px
             font-weight 500
-        a
-            text-decoration underline
-            &:hover
-                color #515ec4
+
 
 </style>
