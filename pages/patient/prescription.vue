@@ -19,7 +19,7 @@
     import axios from '~/plugins/axios'
     export default {
       async asyncData () {
-        let { data } = await axios.get('/api/patient/prescription/128')
+        let { data } = await axios.get('/api/patient/prescription')
         return { prescriptionsAndDoctors: data }
       },
       head () {
