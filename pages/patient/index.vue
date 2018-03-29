@@ -19,16 +19,20 @@
                 </ul>
             </div>
             <div class="subsection">
-                <H3 >
-                    Referrals
-                    <nuxt-link type="button" class="button--grey" to="/patient/referral" style="postion: right;">View Referrals</nuxt-link>
-                </H3>
+                <h3>
+                    My records
+                </h3>
+                <br>
+                    <nuxt-link class="button--grey link" to="/patient/referral" style="flex: 10%"> Referrals</nuxt-link>
+                    <nuxt-link class="button--grey link" to="/patient/prescription" style="flex: 10%"> Prescriptions</nuxt-link>
             </div>
             <div class="subsection">
                 <H3 >
-                    Prescriptions
-                    <nuxt-link type="button" class="button--grey" to="/patient/prescription" style="flex: 10%">My Prescriptions</nuxt-link>
+                    Account options
                 </H3>
+                <br>
+                <button type="button" class="button--grey" v-on:click='deleteRecords(128)' style="flex: 10%">delete my records</button>
+                <button type="button" class="button--grey" v-on:click='deleteAccount(128)' style="flex: 10%">delete my account</button>
             </div>
         </div>
     </section>
@@ -68,6 +72,14 @@
                       datetime: datetime
                     }})
           self.$nuxt.$router.go({ path: '/patient', force: true })
+        },
+        deleteRecords (patientid) {
+          axios.post('/api/patient/deleteRecords/153')
+          self.$nuxt.$router.go({ path: '../pages', force: true })
+        },
+        deleteAccount (patientid) {
+          axios.post('/api/patient/deleteAccount/153')
+          self.$nuxt.$router.go({ path: '../pages', force: true })
         }
       },
 
@@ -101,9 +113,6 @@
         .title
             font-size 18px
             font-weight 500
-        a
-            text-decoration underline
-            &:hover
-                color #515ec4
+
 
 </style>

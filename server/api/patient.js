@@ -8,9 +8,14 @@ const router = Router()
 
 
 /* GET prescription listing. */
-router.get('/patient/prescription', function (req, res, next) {
-    const queryPrescription = connection.query('SELECT * FROM prescription',{ type: connection.QueryTypes.SELECT })
-    const queryDoctor = connection.query('SELECT * FROM doctor',{ type: connection.QueryTypes.SELECT })
+router.get('/patient/prescription/:patientid', function (req, res, next) {
+    const patientid = req.params.patientid
+    const queryPrescription = connection.query('SELECT * FROM prescription WHERE patientid = :patientid',{ type: connection.QueryTypes.SELECT,
+        replacements:{
+            patientid: patientid
+        }
+    })
+    const queryDoctor = connection.query('SELECT * FROM doctor',{ type: connection.QueryTypes.SELECT})
     Promise.all([queryPrescription,queryDoctor]).then((result) => {
         var doctorMap = {}
         for (var doctor of result[1]) {
@@ -26,9 +31,15 @@ router.get('/patient/prescription', function (req, res, next) {
 })
 
 /* GET referrals listing. */
-router.get('/patient/referral', function (req, res, next) {
-    let referralQueryPromise = connection.query('SELECT * FROM referrals',{ type: connection.QueryTypes.SELECT })
+router.get('/patient/referral/:patientid', function (req, res, next) {
+    const patientid = req.params.patientid
+    let referralQueryPromise = connection.query('SELECT * FROM referrals WHERE patientid = :patientid',{ type: connection.QueryTypes.SELECT,
+        replacements: {
+            patientid: patientid
+        }
+    })
     const queryDoctorPromise = connection.query('SELECT * FROM doctor',{ type: connection.QueryTypes.SELECT })
+
     Promise.all([referralQueryPromise,queryDoctorPromise]).then((result) => {
         var doctorMap = {}
         for (var doctor of result[1]) {
@@ -143,6 +154,34 @@ router.post('/patient/cancelAppointment/:patientid', bodyParser.json(), function
             datetime: datetime
         }
     })
+})
+
+router.post('/patient/deleteRecords/:patientid', function (req, res, next) {
+    const patientid = req.params.patientid
+
+    const query = 'DELETE FROM creates_record WHERE patientid = :patientid'
+    connection.query(query, {
+        type: connection.QueryTypes.DELETE,
+        replacements: {
+            patientid: patientid,
+        }
+    }).then(
+        console.log("Records deleted successfully!")
+    )
+})
+
+router.post('/patient/deleteAccount/:patientid', function (req, res, next) {
+    const patientid = req.params.patientid
+
+    const query = 'DELETE FROM patient WHERE patientid = :patientid'
+    connection.query(query, {
+        type: connection.QueryTypes.DELETE,
+        replacements: {
+            patientid: patientid,
+        }
+    }).then(
+        console.log("Account deleted successfully!")
+    )
 })
 
 export default router
