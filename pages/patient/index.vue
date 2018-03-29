@@ -19,7 +19,6 @@
                 </ul>
             </div>
             <div class="subsection">
-                <H3 >
                 <h3>
                     Referrals
                 </h3>
