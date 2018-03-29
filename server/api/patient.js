@@ -15,8 +15,8 @@ const router = Router()
 // })
 
 /* GET prescription listing. */
-router.get('/patient/prescription/:patientid', function (req, res, next) {
-    const patientid = req.params.patientid
+router.get('/patient/prescription/', function (req, res, next) {
+    const patientid = req.session.authUser.userid
     const queryPrescription = connection.query('SELECT * FROM prescription WHERE patientid = :patientid',{ type: connection.QueryTypes.SELECT,
         replacements:{
             patientid: patientid
@@ -38,8 +38,8 @@ router.get('/patient/prescription/:patientid', function (req, res, next) {
 })
 
 /* GET referrals listing. */
-router.get('/patient/referral/:patientid', function (req, res, next) {
-    const patientid = req.params.patientid
+router.get('/patient/referral/', function (req, res, next) {
+    const patientid = req.session.authUser.userid
     let referralQueryPromise = connection.query('SELECT * FROM referrals WHERE patientid = :patientid',{ type: connection.QueryTypes.SELECT,
         replacements: {
             patientid: patientid
@@ -146,9 +146,8 @@ router.post('/patient/cancelAppointment/:patientid', bodyParser.json(), function
     })
 })
 
-router.post('/patient/deleteRecords/:patientid', function (req, res, next) {
-    const patientid = req.params.patientid
-
+router.post('/patient/deleteRecords/', function (req, res, next) {
+    const patientid = req.session.authUser.userid
     const query = 'DELETE FROM creates_record WHERE patientid = :patientid'
     connection.query(query, {
         type: connection.QueryTypes.DELETE,
@@ -160,9 +159,8 @@ router.post('/patient/deleteRecords/:patientid', function (req, res, next) {
     )
 })
 
-router.post('/patient/deleteAccount/:patientid', function (req, res, next) {
-    const patientid = req.params.patientid
-
+router.post('/patient/deleteAccount', function (req, res, next) {
+    const patientid = req.session.authUser.userid
     const query = 'DELETE FROM patient WHERE patientid = :patientid'
     connection.query(query, {
         type: connection.QueryTypes.DELETE,
@@ -171,6 +169,8 @@ router.post('/patient/deleteAccount/:patientid', function (req, res, next) {
         }
     }).then(
         console.log("Account deleted successfully!")
+    ).catch(
+        console.log("Sorry. Failed to delete")
     )
 })
 
