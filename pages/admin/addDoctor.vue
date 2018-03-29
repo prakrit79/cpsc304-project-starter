@@ -34,7 +34,7 @@
   import axios from '~/plugins/axios'
 
   export default {
-
+    middleware: 'check-admin',
     data () {
       return {
         doctorname: '',
