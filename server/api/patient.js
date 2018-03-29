@@ -156,4 +156,32 @@ router.post('/patient/cancelAppointment/:patientid', bodyParser.json(), function
     })
 })
 
+router.post('/patient/deleteRecords/:patientid', function (req, res, next) {
+    const patientid = req.params.patientid
+
+    const query = 'DELETE FROM creates_record WHERE patientid = :patientid'
+    connection.query(query, {
+        type: connection.QueryTypes.DELETE,
+        replacements: {
+            patientid: patientid,
+        }
+    }).then(
+        console.log("Records deleted successfully!")
+    )
+})
+
+router.post('/patient/deleteAccount/:patientid', function (req, res, next) {
+    const patientid = req.params.patientid
+
+    const query = 'DELETE FROM patient WHERE patientid = :patientid'
+    connection.query(query, {
+        type: connection.QueryTypes.DELETE,
+        replacements: {
+            patientid: patientid,
+        }
+    }).then(
+        console.log("Account deleted successfully!")
+    )
+})
+
 export default router

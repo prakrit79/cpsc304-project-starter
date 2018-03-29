@@ -20,15 +20,19 @@
             </div>
             <div class="subsection">
                 <h3>
-                    Referrals
+                    My records
                 </h3>
-                    <nuxt-link class="button--grey link" to="/patient/referral">View Referrals</nuxt-link>
+                <br>
+                    <nuxt-link class="button--grey link" to="/patient/referral" style="flex: 10%"> Referrals</nuxt-link>
+                    <nuxt-link class="button--grey link" to="/patient/prescription" style="flex: 10%"> Prescriptions</nuxt-link>
             </div>
             <div class="subsection">
                 <H3 >
-                    Prescriptions
+                    Account options
                 </H3>
-                <nuxt-link class="button--grey link" to="/patient/prescription">My Prescriptions</nuxt-link>
+                <br>
+                <button type="button" class="button--grey" v-on:click='deleteRecords(128)' style="flex: 10%">delete my records</button>
+                <button type="button" class="button--grey" v-on:click='deleteAccount(128)' style="flex: 10%">delete my account</button>
             </div>
         </div>
     </section>
@@ -68,6 +72,14 @@
                       datetime: datetime
                     }})
           self.$nuxt.$router.go({ path: '/patient', force: true })
+        },
+        deleteRecords (patientid) {
+          axios.post('/api/patient/deleteRecords/153')
+          self.$nuxt.$router.go({ path: '../pages', force: true })
+        },
+        deleteAccount (patientid) {
+          axios.post('/api/patient/deleteAccount/153')
+          self.$nuxt.$router.go({ path: '../pages', force: true })
         }
       },
 
