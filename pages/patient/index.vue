@@ -55,7 +55,7 @@
 
     export default {
 
-      async asyncData ({ store }) {
+      async asyncData ({store}) {
         let appointmentData = await axios.get('/api/patient/appointments/' + store.getters.getAuthUser.userid)
         let doctorData = await axios.get('/api/doctors')
         let locationsData = await axios.get('/api/location')
@@ -96,8 +96,11 @@
             data:
                     {
                       datetime: datetime
-                    }})
-          self.$nuxt.$router.go({ path: '/patient', force: true })
+                    }}).then(() => {
+            var index = this.appointments.findIndex(value => value.appointmentdatetime === datetime)
+            this.appointments.splice(index, 1)
+          })
+          // self.$nuxt.$router.go({ path: '/patient', force: true })
         },
         deleteRecords (patientid) {
           axios.post('/api/patient/deleteRecords/' + this.$store.getters.getAuthUser.userid)
