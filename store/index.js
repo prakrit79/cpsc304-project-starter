@@ -3,11 +3,15 @@ import Vuex from 'vuex'
 const createStore = () => {
   return new Vuex.Store({
     state: {
+      authUser: null,
       doctorid: null,
       appointmentDate: null,
       appointmentTime: null
     },
     mutations: {
+      setUser (state, user) {
+        state.authUser = user
+      },
       setDoctorID (state, data) {
         state.doctorid = data
       },
@@ -19,6 +23,9 @@ const createStore = () => {
       }
     },
     getters: {
+      getAuthUser: state => {
+        return state.authUser
+      },
       getDoctorID: state => {
         return state.doctorid
       },
@@ -27,6 +34,11 @@ const createStore = () => {
       },
       getAppointmentTime: state => {
         return state.appointmentTime
+      }
+    },
+    nuxtServerInit ({ commit }, { req }) {
+      if (req.session && req.session.authUser) {
+        commit('setUser', req.session.authUser)
       }
     }
   })

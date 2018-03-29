@@ -5,7 +5,15 @@ const bodyParser = require('body-parser')
 
 const router = Router()
 
-router.get('/admin', function (req, res) {
+router.use((req, res, next) => {
+  if (req.session.authUser && req.session.authUser.usertype === 'admin') {
+    next()
+  } else {
+    res.status(401).json({ error: 'Bad credentials admin' })
+  }
+})
+
+router.get('/', function (req, res) {
   let locations = connection.query('SELECT * FROM location;', {type: connection.QueryTypes.SELECT})
   let doctors = connection.query('SELECT * FROM doctor;', {type: connection.QueryTypes.SELECT})
   let appointments = connection.query('SELECT * FROM appointments;', {type: connection.QueryTypes.SELECT})
@@ -17,14 +25,14 @@ router.get('/admin', function (req, res) {
   })
 })
 
-router.get('/admin/getLocations', function (req, res) {
+router.get('/getLocations', function (req, res) {
   connection.query('SELECT * FROM location;', {type: connection.QueryTypes.SELECT})
     .then(result => {
       res.json({locations: result})
     })
 })
 
-router.post('/admin/addPatient', bodyParser.json(), function (req, res) {
+router.post('/addPatient', bodyParser.json(), function (req, res) {
   let age = req.body.data.age
   let address = req.body.data.address
   let patientname = req.body.data.patientname
@@ -49,7 +57,7 @@ router.post('/admin/addPatient', bodyParser.json(), function (req, res) {
     })
 })
 
-router.post('/admin/addDoctor', bodyParser.json(), function (req, res) {
+router.post('/addDoctor', bodyParser.json(), function (req, res) {
   let doctorname = req.body.data.doctorname
   let address = req.body.data.address
   let email = req.body.data.email
@@ -72,7 +80,7 @@ router.post('/admin/addDoctor', bodyParser.json(), function (req, res) {
     })
 })
 
-router.post('/admin/removePatient/', bodyParser.json(), function (req, res) {
+router.post('/removePatient/', bodyParser.json(), function (req, res) {
   let id = req.body.data.patientid
   let query = 'DELETE FROM Patient WHERE patientid = :id'
   connection.query(query, {

@@ -3,17 +3,31 @@ import { Router } from 'express'
 var connection = require('../configs/sequelize')
 const bodyParser = require('body-parser')
 
+const userArray = [
+  {userid: 1, username: 'user1', password: 'pass1', usertype: 'admin'},
+  {userid: 2, username: 'user2', password: 'pass2', usertype: 'patient'},
+  {userid: 3, username: 'user3', password: 'pass3', usertype: 'doctor'}
+]
+
 const router = Router()
 
-// /* GET users listing. */
-// router.get('/users', function (req, res, next) {
-//   const query = 'SELECT * FROM Users;'
-//   connection.query(query, { type: connection.QueryTypes.SELECT })
-//     .then(users => {
-//       console.log(users)
-//       res.json(users)
-//     })
-// })
+router.post('/login',bodyParser.json(), function (req, res) {
+  const username = req.body.data.username
+  const password = req.body.data.password
+  let user = userArray.find(user => user.username === username)
+
+  if (user !== undefined && password === user.password) {
+    req.session.authUser = {username: user.username, userid: user.userid, usertype: user.usertype}
+    console.log(req.session.authUser)
+    return res.json({authUser: req.session.authUser})
+  }
+  res.status(401).json({ error: 'Bad credentials' })
+})
+
+router.post('/logout', function (req, res) {
+  delete req.session.authUser
+  res.json({ ok: true })
+})
 
 /* GET users listing. */
 router.get('/users', function (req, res, next) {

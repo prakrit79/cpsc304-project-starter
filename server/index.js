@@ -1,4 +1,6 @@
 import express from 'express'
+import session from 'express-session'
+
 import { Nuxt, Builder } from 'nuxt'
 
 import api from './api'
@@ -6,6 +8,13 @@ import api from './api'
 const app = express()
 const host = process.env.HOST || '127.0.0.1'
 const port = process.env.PORT || 3000
+
+app.use(session({
+  secret: 'cpsc 304',
+  resave: false,
+  saveUninitialized: false,
+  cookie: { maxAge: 60000 }
+}))
 
 app.set('port', port)
 

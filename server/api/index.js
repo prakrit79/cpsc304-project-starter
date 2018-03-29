@@ -7,10 +7,9 @@ import admin from './admin'
 
 const router = Router()
 
-// Add USERS Routes
 router.use(users)
 router.use(patient)
 router.use(doctor)
-router.use(admin)
+router.use('/admin', admin)
 
 export default router

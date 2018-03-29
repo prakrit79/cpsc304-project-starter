@@ -1,23 +1,62 @@
 <template>
   <section class="container">
     <div>
-      <h1 class="title">
-        Login here
-      </h1>
       <div class="links">
         <nuxt-link class="button--grey link" style="margin-left: 15px;" to="/patient">Patient</nuxt-link>
         <nuxt-link class="button--grey link" style="margin-left: 15px;" to="/doctor/">Doctor</nuxt-link>
         <nuxt-link class="button--grey link" style="margin-left: 15px;" to="/admin">Admin</nuxt-link>
+
+          <div style="margin: 10px 0;">
+              <span>Username: </span>
+              <input type="text" v-model="username"/>
+          </div>
+          <div style="margin: 10px 0;">
+              <span>Password: </span>
+              <input type="password" v-model="password"/>
+          </div>
+          <div v-if="badlogin" >Bad login credentials</div>
+          <button class="button--grey link" style="margin-left: 15px;" @click="login">Login</button>
+
       </div>
     </div>
   </section>
 </template>
 
 <script>
+  import axios from '~/plugins/axios'
 
-export default {
-  components: {
-  }
+  export default {
+    data () {
+      return {
+        badlogin: false,
+        username: '',
+        password: ''
+      }
+    },
+    methods: {
+      login () {
+        axios.post('/api/login', {
+          credentials: 'same-origin',
+          headers:
+            {
+              'Content-Type': 'application/json'
+            },
+          data:
+            {
+              username: this.username,
+              password: this.password
+            }})
+          .then((res) => {
+            let authUser = res.data.authUser
+            this.$store.commit('setUser', authUser)
+            self.$nuxt.$router.replace({ path: '/' + authUser.usertype })
+          })
+          .catch((e) => {
+            this.badlogin = true
+            console.log(e)
+          })
+      }
+    }
 }
 </script>
 

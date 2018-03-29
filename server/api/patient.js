@@ -6,6 +6,13 @@ const bodyParser = require('body-parser')
 
 const router = Router()
 
+// router.use((req, res, next) => {
+//   if (req.session.authUser && req.session.authUser.usertype === 'doctor') {
+//     next()
+//   } else {
+//     res.status(401).json({ error: 'Bad credentials' })
+//   }
+// })
 
 /* GET prescription listing. */
 router.get('/patient/prescription', function (req, res, next) {
