@@ -7,7 +7,7 @@
                     <select v-model="doctorid">
                         {{doctors[0].doctorname}}
                         <option disabled value="">Please select one</option>
-                        <option v-for="doctor in doctors" v-bind:value="doctor.doctorid">
+                        <option v-for="doctor in doctors" v-bind:value="doctor.doctorid" v-if="doctors.length > 0">
                             {{doctor.doctorname}}
                         </option>
                     </select>
@@ -32,7 +32,7 @@
                 </transition>
             </form>
             <transition name="expand">
-                <button type="button" class="button--grey" @click="submitInsert" v-if="booktime && !errors.has('date')" style="padding: 10px 20px; margin: 0 45px; position: relative;">Book</button>
+                <button type="button" class="button--grey" @click="submitInsert" v-if="doctorid && date && booktime && !errors.has('date')" style="padding: 10px 20px; margin: 0 45px; position: relative;">Book</button>
             </transition>
         </section>
     </transition>
@@ -74,6 +74,19 @@
               var index = this.appointmentTimes.findIndex(value => value.time === res.data[time].appointmentdatetime)
               if (index !== -1) {
                 this.appointmentTimes.splice(index, 1)
+              }
+            }
+          })
+        },
+
+        booktime: function () {
+          let self = this
+          axios.get('/api/doctorsfree/' + self.date + ' ' + self.booktime).then((doctorsfree) => {
+            for (var doctor in this.doctors) {
+              var index = doctorsfree.data.findIndex(value => value.doctorid === this.doctors[doctor].doctorid)
+
+              if (index === -1) {
+                this.doctors.splice(doctor, 1)
               }
             }
           })
