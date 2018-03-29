@@ -14,10 +14,6 @@
                         <input type="number" v-model="patientid"/>
                     </div>
                     <div style="margin: 10px 0;">
-                        <span class="referral-doctorid">Doctor ID: </span>
-                        <input type="number" v-model="doctorid"/>
-                    </div>
-                    <div style="margin: 10px 0;">
                         <span class="referral-rdoctorid">Referral Doctor ID: </span>
                         <input type="number" v-model="referraldoctorid"/>
                     </div>
@@ -31,7 +27,7 @@
 
             <div class="subsection">
                 <div class="links">
-                    <nuxt-link class="button--grey link" style="margin-left: 15px;" :to="{ path: `/doctor/${user.patientid}/medrec`, params: { username: user.patientname }}">
+                    <nuxt-link class="button--grey link" style="margin-left: 15px;" :to="{ path: `/doctor/${user.patientid}/medrec`, params: { username: user.patientname, id: user.patientid }}">
                        Medical Record
                     </nuxt-link>
                     <nuxt-link class="button--grey link" style="margin-left: 15px;" :to="{ path: `/doctor/${user.patientid}/prescription`, params: { username: user.patientname }}">Prescriptions</nuxt-link>
@@ -49,7 +45,6 @@
       data () {
         return {
           patientid: '',
-          doctorid: '',
           referraldoctorid: '',
           referralDate: ''
         }
@@ -67,7 +62,6 @@
             data:
                         {
                           patientid: self.patientid,
-                          doctorid: self.doctorid,
                           referraldoctorid: self.referraldoctorid,
                           referralDate: self.referralDate
                         }})

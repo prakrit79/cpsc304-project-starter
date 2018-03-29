@@ -8,7 +8,7 @@
                 <ul style="list-style-type: none; padding: 0; margin: 0;">
                     <li v-for="(patient, patientid) in dosages" :key="patientid" style="padding: 10px 20px; margin: 0 25px; position: relative;">
                         {{'Medication Name: ' + patient.medicationname}} <br>
-                        {{'Dosage: ' + patient.max}}
+                        {{'Dosage(mg/day): ' + patient.max}}
                     </li>
                 </ul>
             </div>
@@ -19,7 +19,7 @@
                 <ul style="list-style-type: none; padding: 0; margin: 0;">
                     <li v-for="(patient, patientid) in dosagesmin" :key="patientid" style="padding: 10px 20px; margin: 0 25px; position: relative;">
                         {{'Medication Name: ' + patient.medicationname}} <br>
-                        {{'Dosage: ' + patient.min}}
+                        {{'Dosage(mg/day): ' + patient.min}}
                     </li>
                 </ul>
             </div>
@@ -29,7 +29,7 @@
                 </div>
                 <ul style="list-style-type: none; padding: 0; margin: 0;">
                     <li v-for="(patient, patientid) in dosagesavg" :key="patientid" style="padding: 10px 20px; margin: 0 25px; position: relative;">
-                        {{'Dosage: ' + patient.max}}
+                        {{'Dosage(mg/day): ' + patient.max}}
                     </li>
                 </ul>
             </div>
