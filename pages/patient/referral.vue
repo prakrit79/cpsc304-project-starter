@@ -19,7 +19,7 @@
     import axios from '~/plugins/axios'
     export default {
       async asyncData ({store}) {
-        let { data } = await axios.get('/api/patient/referral/' + store.getters.getAuthUser.userid)
+        let { data } = await axios.get('/api/patient/referral/')
         return {referralsAndDoctors: data}
       },
       head () {
