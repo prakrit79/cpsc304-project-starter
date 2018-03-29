@@ -3,10 +3,21 @@
         <div class="content">
             <div class="subsection">
                 <H3 >
-                    Appointments
-                    <button type="button" v-on:click='show = true' >new</button>
+                    Book New Appointment at:
                 </H3>
-                <makeAppointment :show="show" :doctors="doctors"/>
+                <div class="subsection" style="padding: 10px 20px; margin: 0 25px; position: relative; display: flex;" v-if="!show">
+                    <button style="padding: 10px;" type="button" class="button--grey" v-on:click='getLocationDoctors(location.address)' v-for="(location, clinicname) in locations" :key="clinicname">{{location.clinicname}}</button>
+                    <button style="padding: 10px;" type="button" class="button--grey" v-on:click='getAllDoctors()'>Any Location</button>
+                </div>
+                <section v-if="show" class="users-view">
+                    <H3>
+                        Location: {{location}}
+                    </H3>
+                </section>
+                <makeAppointment :show="show" :doctors="doctors" />
+                <H3 >
+                    Appointments
+                </H3>
                 <ul style="list-style-type: none; padding: 0; margin: 0;">
                     <li v-for="(appointment, date, aptime) in appointments" :key="date + aptime" style="padding: 10px 20px; margin: 0 25px; position: relative; display: flex;">
                         {{ appointment.duration + ' hour appointment with ' + appointment.doctorname }}
@@ -44,10 +55,11 @@
 
     export default {
 
-      async asyncData () {
-        let appointmentData = await axios.get('/api/patient/appointments/143')
+      async asyncData ({ store }) {
+        let appointmentData = await axios.get('/api/patient/appointments/' + store.getters.getAuthUser.userid)
         let doctorData = await axios.get('/api/doctors')
-        return { appointments: appointmentData.data, doctors: doctorData.data }
+        let locationsData = await axios.get('/api/location')
+        return { appointments: appointmentData.data, doctors: doctorData.data, locations: locationsData.data }
       },
 
       components: {
@@ -61,8 +73,22 @@
           this.$store.commit('setAppointmentTime', time)
           self.$nuxt.$router.replace({ path: '/patient/appointment' })
         },
+
+        getLocationDoctors (address) {
+          axios.get('/api/doctor/atAddress/' + address).then((res) => {
+            this.doctors = res.data
+            this.location = address
+          }).then(this.show = true)
+        },
+        getAllDoctors () {
+          axios.get('/api/doctors/').then((res) => {
+            this.doctors = res.data
+            this.location = 'All locations'
+          }).then(this.show = true)
+        },
+
         cancel (datetime) {
-          axios.post('/api/patient/cancelAppointment/143', {
+          axios.post('/api/patient/cancelAppointment/' + this.$store.getters.getAuthUser.userid, {
             headers:
                     {
                       'Content-Type': 'application/json'
@@ -70,21 +96,25 @@
             data:
                     {
                       datetime: datetime
-                    }})
-          self.$nuxt.$router.go({ path: '/patient', force: true })
+                    }}).then(() => {
+            var index = this.appointments.findIndex(value => value.appointmentdatetime === datetime)
+            this.appointments.splice(index, 1)
+          })
         },
-        deleteRecords () {
-          axios.post('/api/patient/deleteRecords/')
-          self.$nuxt.$router.replace({ path: '/', force: true })
+        deleteRecords (patientid) {
+          axios.post('/api/patient/deleteRecords/' + this.$store.getters.getAuthUser.userid)
+          self.$nuxt.$router.go({ path: '../pages', force: true })
         },
-        deleteAccount () {
-          axios.post('/api/patient/deleteAccount/')
-          self.$nuxt.$router.replace({ path: '/', force: true })
+        deleteAccount (patientid) {
+          axios.post('/api/patient/deleteAccount/' + this.$store.getters.getAuthUser.userid)
+          self.$nuxt.$router.go({ path: '../pages', force: true })
         }
       },
 
       data () {
         return {
+          location: '',
+          doctors: {},
           show: false
         }
       }

@@ -7,7 +7,7 @@
                     <select v-model="doctorid">
                         {{doctors[0].doctorname}}
                         <option disabled value="">Please select one</option>
-                        <option v-for="doctor in doctors" v-bind:value="doctor.doctorid">
+                        <option v-for="doctor in doctors" v-bind:value="doctor.doctorid" v-if="doctors.length > 0">
                             {{doctor.doctorname}}
                         </option>
                     </select>
@@ -15,11 +15,12 @@
                 <transition name="expand">
                     <div style="margin: 10px 0;" v-if="doctorid">
                         <span class="appointment-date">Date </span>
-                        <input type="date" v-model="date"/>
+                        <input name="date" type="date" v-model="date" v-validate="'date_format:YYYY-MM-DD|date_between:' + todaysDate + ',2018-12-31'" :class="{'input': true, 'is-danger': errors.has('date_between') }"/>
+                        <div v-show="errors.has('date')" class="content" style="color: red;">{{ errors.first('date') }}</div>
                     </div>
                 </transition>
                 <transition name="expand">
-                    <div style="margin: 10px 0;" v-if="date" >
+                    <div style="margin: 10px 0;" v-if="date && !errors.has('date')" >
                         <span class="appointment-time">Available Times </span>
                         <select v-model="booktime">
                             <option disabled value="">select time</option>
@@ -31,7 +32,7 @@
                 </transition>
             </form>
             <transition name="expand">
-                <button type="button" class="button--grey" @click="submitInsert" v-if="booktime" style="padding: 10px 20px; margin: 0 45px; position: relative;">Book</button>
+                <button type="button" class="button--grey" @click="submitInsert" v-if="doctorid && date && booktime && !errors.has('date')" style="padding: 10px 20px; margin: 0 45px; position: relative;">Book</button>
             </transition>
         </section>
     </transition>
@@ -43,7 +44,21 @@
     export default {
 
       data () {
+        // build todays date variable
+        var today = new Date()
+        var dd = today.getDate()
+        var mm = (today.getMonth() + 1)
+        var yyyy = today.getFullYear()
+
+        if (dd < 10) {
+          dd = '0' + dd
+        }
+
+        if (mm < 10) {
+          mm = '0' + mm
+        }
         return {
+          todaysDate: yyyy + '-' + mm + '-' + dd,
           doctorid: '',
           date: '',
           booktime: '',
@@ -62,6 +77,19 @@
               }
             }
           })
+        },
+
+        booktime: function () {
+          let self = this
+          axios.get('/api/doctorsfree/' + self.date + ' ' + self.booktime).then((doctorsfree) => {
+            for (var doctor in this.doctors) {
+              var index = doctorsfree.data.findIndex(value => value.doctorid === this.doctors[doctor].doctorid)
+
+              if (index === -1) {
+                this.doctors.splice(doctor, 1)
+              }
+            }
+          })
         }
       },
 
@@ -71,7 +99,7 @@
         submitInsert () {
           let self = this
 
-          axios.post('/api/patient/makeAppointment/143', {
+          axios.post('/api/patient/makeAppointment/' + this.$store.getters.getAuthUser.userid, {
             headers:
                         {
                           'Content-Type': 'application/json'

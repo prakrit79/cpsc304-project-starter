@@ -10,13 +10,13 @@ const userArray = [
   {userid: 128, username: 'user128', password: 'pass128', usertype: 'patient'},
   {userid: 111, username: 'user111', password: 'pass111', usertype: 'patient'},
   {userid: 123, username: 'user123', password: 'pass123', usertype: 'patient'},
-  {userid: 143, username: 'user143', password: 'pass143', usertype: 'patient'},
   {userid: 153, username: 'user153', password: 'pass153', usertype: 'patient'},
   {userid: 53, username: 'user53', password: 'pass53', usertype: 'doctor'},
   {userid: 58, username: 'user58', password: 'pass58', usertype: 'doctor'},
   {userid: 63, username: 'user63', password: 'pass63', usertype: 'doctor'},
   {userid: 77, username: 'user77', password: 'pass77', usertype: 'doctor'},
-  {userid: 78, username: 'user78', password: 'pass78', usertype: 'doctor'}
+  {userid: 78, username: 'user78', password: 'pass78', usertype: 'doctor'},
+  {userid: 143, username: 'Diana Prince', password: 'Diana Prince', usertype: 'patient'}
 ]
 
 const router = Router()

@@ -36,10 +36,13 @@ const createStore = () => {
         return state.appointmentTime
       }
     },
-    nuxtServerInit ({ commit }, { req }) {
-      if (req.session && req.session.authUser) {
-        commit('setUser', req.session.authUser)
+    actions: {
+      nuxtServerInit ({ commit }, { req }) {
+        if (req.session && req.session.authUser) {
+          commit('setUser', req.session.authUser)
+        }
       }
+
     }
   })
 }
