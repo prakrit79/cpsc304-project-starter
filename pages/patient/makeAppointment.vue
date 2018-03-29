@@ -86,7 +86,7 @@
         submitInsert () {
           let self = this
 
-          axios.post('/api/patient/makeAppointment/143', {
+          axios.post('/api/patient/makeAppointment/' + this.$store.getters.getAuthUser.userid, {
             headers:
                         {
                           'Content-Type': 'application/json'

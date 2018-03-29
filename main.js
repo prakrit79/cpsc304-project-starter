@@ -107,8 +107,8 @@ module.exports = require("body-parser");
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_express__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_express___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_express__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_express_session__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_express_session___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_express_session__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_cookie_session__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_cookie_session___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_cookie_session__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_nuxt__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_nuxt___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_nuxt__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__api__ = __webpack_require__(6);
@@ -123,7 +123,7 @@ var app = __WEBPACK_IMPORTED_MODULE_0_express___default()();
 var host = process.env.HOST || '127.0.0.1';
 var port = process.env.PORT || 3000;
 
-app.use(__WEBPACK_IMPORTED_MODULE_1_express_session___default()({
+app.use(__WEBPACK_IMPORTED_MODULE_1_cookie_session___default()({
   secret: 'cpsc 304',
   resave: false,
   saveUninitialized: false,
@@ -159,7 +159,7 @@ console.log('Server listening on ' + host + ':' + port); // eslint-disable-line 
 /* 4 */
 /***/ (function(module, exports) {
 
-module.exports = require("express-session");
+module.exports = require("cookie-session");
 
 /***/ }),
 /* 5 */
@@ -556,6 +556,8 @@ router.post('/patient/cancelAppointment/:patientid', bodyParser.json(), function
             patientid: patientid,
             datetime: datetime
         }
+    }).then(function (response) {
+        res.json(response);
     });
 });
 

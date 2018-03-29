@@ -141,6 +141,8 @@ router.post('/patient/cancelAppointment/:patientid', bodyParser.json(), function
             patientid: patientid,
             datetime: datetime
         }
+    }).then((response) => {
+        res.json(response)
     })
 })
 
