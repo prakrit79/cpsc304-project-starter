@@ -163,7 +163,7 @@ router.post('/patient/cancelAppointment/:patientid', bodyParser.json(), function
     })
 })
 
-router.post('/patient/deleteRecords/:patientid', function (req, res, next) {
+router.post('/patient/deleteRecords/', function (req, res, next) {
     const patientid = req.session.authUser.userid
     const query = 'DELETE FROM creates_record WHERE patientid = :patientid'
     connection.query(query, {
@@ -176,7 +176,7 @@ router.post('/patient/deleteRecords/:patientid', function (req, res, next) {
     )
 })
 
-router.post('/patient/deleteAccount/:patientid', function (req, res, next) {
+router.post('/patient/deleteAccount', function (req, res, next) {
     const patientid = req.session.authUser.userid
     const query = 'DELETE FROM patient WHERE patientid = :patientid'
     connection.query(query, {
@@ -186,6 +186,8 @@ router.post('/patient/deleteAccount/:patientid', function (req, res, next) {
         }
     }).then(
         console.log("Account deleted successfully!")
+    ).catch(
+        console.log("Sorry. Failed to delete")
     )
 })
 

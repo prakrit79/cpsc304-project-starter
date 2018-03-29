@@ -31,8 +31,8 @@
                     Account options
                 </H3>
                 <br>
-                <button type="button" class="button--grey" v-on:click='deleteRecords(128)' style="flex: 10%">delete my records</button>
-                <button type="button" class="button--grey" v-on:click='deleteAccount(128)' style="flex: 10%">delete my account</button>
+                <button type="button" class="button--grey" v-on:click='deleteRecords()' style="flex: 10%">delete my records</button>
+                <button type="button" class="button--grey" v-on:click='deleteAccount()' style="flex: 10%">delete my account</button>
             </div>
         </div>
     </section>
@@ -73,13 +73,13 @@
                     }})
           self.$nuxt.$router.go({ path: '/patient', force: true })
         },
-        deleteRecords (patientid) {
-          axios.post('/api/patient/deleteRecords/153')
-          self.$nuxt.$router.go({ path: '../pages', force: true })
+        deleteRecords () {
+          axios.post('/api/patient/deleteRecords/')
+          self.$nuxt.$router.replace({ path: '/', force: true })
         },
-        deleteAccount (patientid) {
-          axios.post('/api/patient/deleteAccount/153')
-          self.$nuxt.$router.go({ path: '../pages', force: true })
+        deleteAccount () {
+          axios.post('/api/patient/deleteAccount/')
+          self.$nuxt.$router.replace({ path: '/', force: true })
         }
       },
 
