@@ -6,7 +6,8 @@ const bodyParser = require('body-parser')
 const userArray = [
   {userid: 1, username: 'user1', password: 'pass1', usertype: 'admin'},
   {userid: 2, username: 'user2', password: 'pass2', usertype: 'patient'},
-  {userid: 3, username: 'user3', password: 'pass3', usertype: 'doctor'}
+  {userid: 3, username: 'user3', password: 'pass3', usertype: 'doctor'},
+    {userid: 143, username: 'Diana Prince', password: 'Diana Prince', usertype: 'patient'}
 ]
 
 const router = Router()

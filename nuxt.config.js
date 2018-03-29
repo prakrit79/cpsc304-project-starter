@@ -37,6 +37,11 @@ module.exports = {
     }
   },
 
+  plugins: [
+    { src: '~/plugins/vee-validate', ssr: true },
+    { src: '~/plugins/localStorage', ssr: false }
+  ],
+
   modules: [
     '@nuxtjs/pwa'
   ]

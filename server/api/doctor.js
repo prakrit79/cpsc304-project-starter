@@ -221,7 +221,8 @@ router.get('/doctor/:username/appointment', function (req, res, next) {
 
 /* GET users listing. */
 router.get('/doctors', function (req, res, next) {
-    const query = 'SELECT * FROM doctor;'
+    // This query sorts doctors by least busy ie fewest appointments
+    const query = 'SELECT *, (SELECT COUNT(*) FROM appointments WHERE doctorid = d.doctorid) as count FROM doctor d ORDER BY count;'
     connection.query(query, { type: connection.QueryTypes.SELECT })
         .then(doctors => {
             res.json(doctors)
@@ -229,7 +230,6 @@ router.get('/doctors', function (req, res, next) {
 })
 
 router.get('/doctor/appointments/:doctorid/:date', bodyParser.json(), function (req, res, next) {
-    console.log(req.params)
     const doctorid = req.params.doctorid || -1
     const date = req.params.date || ''
 
@@ -426,6 +426,21 @@ router.get('/doctor/:username/appointment', function (req, res, next) {
         })
         .then(appointments => {
             res.json(appointments)
+        })
+})
+
+router.get('/doctor/atAddress/:address', function (req, res, next) {
+    const address = req.params.address
+    const query = 'SELECT * FROM doctor WHERE address = :address;'
+    connection.query(query,
+        {
+            type: connection.QueryTypes.SELECT,
+            replacements: {
+                address: address
+            }
+        })
+        .then(doctors => {
+            res.json(doctors)
         })
 })
 

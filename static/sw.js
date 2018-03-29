@@ -19,92 +19,92 @@ importScripts('workbox-sw.prod.v1.3.0.js');
  */
 const fileManifest = [
   {
-    "url": "/_nuxt/app.e848fbe789af00b598aa.js",
-    "revision": "aa9a4deffd934997f7cd6100c51587ee"
+    "url": "/_nuxt/0.nuxt.bundle.b28109ee5d768b7ba276.js",
+    "revision": "fe04507441297973ed57b0ee80793b69"
   },
   {
-    "url": "/_nuxt/common.fcaba9d8785715f3e601.js",
-    "revision": "a311e8155637697e546191851df9b819"
+    "url": "/_nuxt/1.nuxt.bundle.441bf0b5876eed7906dd.js",
+    "revision": "42a20a3254ab3d3ba5ebb2fccfcea587"
   },
   {
-    "url": "/_nuxt/layouts/default.04a073663662994fb095.js",
-    "revision": "6f6a40bee02ff0d4f64a14c9af77e21d"
+    "url": "/_nuxt/10.nuxt.bundle.7deb5e1b4c866606f45d.js",
+    "revision": "be2437ed5bf08c54408bbdc1bcd8e200"
   },
   {
-    "url": "/_nuxt/manifest.5adab02f2ed62dafd009.js",
-    "revision": "42ee56d7fc24d4e4b4c0777a8515b7d6"
+    "url": "/_nuxt/11.nuxt.bundle.0af389dad797e0bdf468.js",
+    "revision": "cc3254967bc7f54439b0c3e3193447db"
   },
   {
-    "url": "/_nuxt/pages/admin\\index.807c8d6f46a28735f348.js",
-    "revision": "388a19368fefcb6901e80b504a0fedd9"
+    "url": "/_nuxt/12.nuxt.bundle.d7aa57db7870eebe606c.js",
+    "revision": "0c46622000cc4944fc9dff2b7026ac0e"
   },
   {
-    "url": "/_nuxt/pages/doctor\\_username\\appointment.ac17d4ffb6a1eda5ecd5.js",
-    "revision": "5a3211a498f1148e5867b7647371090f"
+    "url": "/_nuxt/13.nuxt.bundle.e996df17ce16e5af153f.js",
+    "revision": "72d3b4a3344d80aec1b35d0b6e0f34ca"
   },
   {
-    "url": "/_nuxt/pages/doctor\\_username\\index.11fe311e4c3c12d86797.js",
-    "revision": "7f01d1318a418f6ac72bd13ec27fad2a"
+    "url": "/_nuxt/14.nuxt.bundle.538d1cbc263654241ad0.js",
+    "revision": "c27cc0c5125527200b4f771b60c35d07"
   },
   {
-    "url": "/_nuxt/pages/doctor\\_username\\medrec.dc98ebee90d97753d9e0.js",
-    "revision": "053248a894c8d02b64bee017be5a8965"
+    "url": "/_nuxt/15.nuxt.bundle.764c5c9a3d8d97885162.js",
+    "revision": "dc5a81b19ae5e9786c5e3194209e6017"
   },
   {
-    "url": "/_nuxt/pages/doctor\\_username\\prescription.88288ac2b12d635bbd7a.js",
-    "revision": "b87c74b672b030e69f5ea2069ff4bc49"
+    "url": "/_nuxt/16.nuxt.bundle.5d85f1b7a74f7fed08d1.js",
+    "revision": "e902d427d707b2f77ae2181787feadac"
   },
   {
-    "url": "/_nuxt/pages/doctor\\dosages.9d57598a8944feeb84b5.js",
-    "revision": "0d624a2c08cfcd6ef4f9fd6cb3ac42ab"
+    "url": "/_nuxt/17.nuxt.bundle.d100348cb331f2deffba.js",
+    "revision": "094242c77f9d9042ee65b36a90c0a0c8"
   },
   {
-    "url": "/_nuxt/pages/doctor\\index.8a78b6c9304374a7eee2.js",
-    "revision": "7dd57d76a8512de2c3b59572f7cd7433"
+    "url": "/_nuxt/18.nuxt.bundle.e6ec3c41be505bbf3c42.js",
+    "revision": "39ffd317e9e0c2d73368e553283846b3"
   },
   {
-    "url": "/_nuxt/pages/index.4f92085c9f4b6c36661b.js",
-    "revision": "22d588af4a1ffb43a94e70838aa1001c"
+    "url": "/_nuxt/2.nuxt.bundle.a24dbc2a8ce928124023.js",
+    "revision": "2a6abf11e15cf93d3e537eba54c4ab75"
   },
   {
-    "url": "/_nuxt/pages/patient\\appointment.f71563a713ba4c8167da.js",
-    "revision": "9709c7ee5c0b41e68745fd130efb2e65"
+    "url": "/_nuxt/3.nuxt.bundle.0b104e663507f02cf188.js",
+    "revision": "bd57bab03a00bf7ad021d9dbcef8b283"
   },
   {
-    "url": "/_nuxt/pages/patient\\index.78723dd00c7c85ae86ef.js",
-    "revision": "965a3c42301e869e917a8bc04e1853c1"
+    "url": "/_nuxt/4.nuxt.bundle.6120634050db8ad1601b.js",
+    "revision": "fc3338bed0a2ef5fd3b019fb8f41065f"
   },
   {
-    "url": "/_nuxt/pages/patient\\makeAppointment.1ac435a1414e4ec39624.js",
-    "revision": "e421d032a25b51339d6fb3df083c6137"
+    "url": "/_nuxt/5.nuxt.bundle.0c908aaf242c9b3448aa.js",
+    "revision": "d9c19ee19e5d2e4db70319bba1c29c85"
   },
   {
-    "url": "/_nuxt/pages/patient\\prescription.0b2d4b527e737df8f9b3.js",
-    "revision": "6f5fc71d7f153cdb13a58941ab94824e"
+    "url": "/_nuxt/6.nuxt.bundle.ba809c527b75e377303f.js",
+    "revision": "065eb60114b3bd7d13f7816e1058b395"
   },
   {
-    "url": "/_nuxt/pages/patient\\referral.2173a10f331610cfbab8.js",
-    "revision": "82018ad4de0dd41a3d97caa435a4265e"
+    "url": "/_nuxt/7.nuxt.bundle.7010938997c7efaa5809.js",
+    "revision": "2b590ed4b9ab956e0d2fb17fb16b10ae"
   },
   {
-    "url": "/_nuxt/pages/users\\_username\\index.b6b19be4294ed08c9cb8.js",
-    "revision": "b8ba846475b100e85207a7a0eaf55dd2"
+    "url": "/_nuxt/8.nuxt.bundle.e2950f71fb582ec82baf.js",
+    "revision": "5dd8a39e8249c0aae8d0fc73c2da358e"
   },
   {
-    "url": "/_nuxt/pages/users\\_username\\update.ca2b1d375d2fdd7ffe9c.js",
-    "revision": "468ce661d5aad17837f4472116a2d3ff"
+    "url": "/_nuxt/9.nuxt.bundle.53d74519770998cd1fc0.js",
+    "revision": "627e76d22b9d48804e03852d11f8e62b"
   },
   {
-    "url": "/_nuxt/pages/users\\add.024c4a61c90e35884008.js",
-    "revision": "f247175198915f3db6c308a6b4544bd1"
+    "url": "/_nuxt/manifest.0d0508959064984435a5.js",
+    "revision": "3c5bb497ca5c831848bccdaa4ee758be"
   },
   {
-    "url": "/_nuxt/pages/users\\addPatient.c899732fb149f0b8b14d.js",
-    "revision": "5bd5069e930a6ffdb6d09a5c9d6cdc96"
+    "url": "/_nuxt/nuxt.bundle.8a4319d319303601adb7.js",
+    "revision": "2cd02e5251c459baed08919098052055"
   },
   {
-    "url": "/_nuxt/pages/users\\index.beaa08d71290fa098ccd.js",
-    "revision": "ff4709e1aa8a27e5144018b23c252785"
+    "url": "/_nuxt/vendor.bundle.5833975c6b7ae9f86d18.js",
+    "revision": "8255da9603c09c4c276045062b8bc6a4"
   }
 ];
 
