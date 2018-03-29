@@ -75,7 +75,7 @@ module.exports = require("express");
 /* 1 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var Sequelize = __webpack_require__(7);
+var Sequelize = __webpack_require__(8);
 
 var sequelize = new Sequelize(process.env.DB_NAME || "bvuzqveg", process.env.DB_USER || "bvuzqveg", process.env.DB_PASSWORD || "eLf95vBqOhKXzVz-4LAEnOnmI05ZHFFi", {
   host: process.env.DB_HOST || "baasu.db.elephantsql.com",
@@ -107,9 +107,13 @@ module.exports = require("body-parser");
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_express__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_express___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_express__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_nuxt__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_nuxt___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_nuxt__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__api__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_express_session__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_express_session___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_express_session__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_nuxt__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_nuxt___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_nuxt__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__api__ = __webpack_require__(6);
+
+
 
 
 
@@ -119,21 +123,28 @@ var app = __WEBPACK_IMPORTED_MODULE_0_express___default()();
 var host = process.env.HOST || '127.0.0.1';
 var port = process.env.PORT || 3000;
 
+app.use(__WEBPACK_IMPORTED_MODULE_1_express_session___default()({
+  secret: 'cpsc 304',
+  resave: false,
+  saveUninitialized: false,
+  cookie: { maxAge: 60000 }
+}));
+
 app.set('port', port);
 
 // Import API Routes
-app.use('/api', __WEBPACK_IMPORTED_MODULE_2__api__["a" /* default */]);
+app.use('/api', __WEBPACK_IMPORTED_MODULE_3__api__["a" /* default */]);
 
 // Import and Set Nuxt.js options
-var config = __webpack_require__(12);
-config.dev = !("development" === 'production');
+var config = __webpack_require__(13);
+config.dev = !("production" === 'production');
 
 // Init Nuxt.js
-var nuxt = new __WEBPACK_IMPORTED_MODULE_1_nuxt__["Nuxt"](config);
+var nuxt = new __WEBPACK_IMPORTED_MODULE_2_nuxt__["Nuxt"](config);
 
 // Build only in dev mode
 if (config.dev) {
-  var builder = new __WEBPACK_IMPORTED_MODULE_1_nuxt__["Builder"](nuxt);
+  var builder = new __WEBPACK_IMPORTED_MODULE_2_nuxt__["Builder"](nuxt);
   builder.build();
 }
 
@@ -148,20 +159,26 @@ console.log('Server listening on ' + host + ':' + port); // eslint-disable-line 
 /* 4 */
 /***/ (function(module, exports) {
 
-module.exports = require("nuxt");
+module.exports = require("express-session");
 
 /***/ }),
 /* 5 */
+/***/ (function(module, exports) {
+
+module.exports = require("nuxt");
+
+/***/ }),
+/* 6 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_express__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_express___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_express__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__users__ = __webpack_require__(6);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__patient__ = __webpack_require__(8);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__doctor__ = __webpack_require__(9);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__admin__ = __webpack_require__(10);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__location__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__users__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__patient__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__doctor__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__admin__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__location__ = __webpack_require__(12);
 
 
 
@@ -172,17 +189,16 @@ module.exports = require("nuxt");
 
 var router = Object(__WEBPACK_IMPORTED_MODULE_0_express__["Router"])();
 
-// Add USERS Routes
 router.use(__WEBPACK_IMPORTED_MODULE_1__users__["a" /* default */]);
 router.use(__WEBPACK_IMPORTED_MODULE_2__patient__["a" /* default */]);
 router.use(__WEBPACK_IMPORTED_MODULE_3__doctor__["a" /* default */]);
-router.use(__WEBPACK_IMPORTED_MODULE_4__admin__["a" /* default */]);
 router.use(__WEBPACK_IMPORTED_MODULE_5__location__["a" /* default */]);
+router.use('/admin', __WEBPACK_IMPORTED_MODULE_4__admin__["a" /* default */]);
 
 /* harmony default export */ __webpack_exports__["a"] = (router);
 
 /***/ }),
-/* 6 */
+/* 7 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -193,17 +209,29 @@ router.use(__WEBPACK_IMPORTED_MODULE_5__location__["a" /* default */]);
 var connection = __webpack_require__(1);
 var bodyParser = __webpack_require__(2);
 
+var userArray = [{ userid: 1, username: 'user1', password: 'pass1', usertype: 'admin' }, { userid: 2, username: 'user2', password: 'pass2', usertype: 'patient' }, { userid: 3, username: 'user3', password: 'pass3', usertype: 'doctor' }, { userid: 143, username: 'Diana Prince', password: 'Diana Prince', usertype: 'patient' }];
+
 var router = Object(__WEBPACK_IMPORTED_MODULE_0_express__["Router"])();
 
-// /* GET users listing. */
-// router.get('/users', function (req, res, next) {
-//   const query = 'SELECT * FROM Users;'
-//   connection.query(query, { type: connection.QueryTypes.SELECT })
-//     .then(users => {
-//       console.log(users)
-//       res.json(users)
-//     })
-// })
+router.post('/login', bodyParser.json(), function (req, res) {
+  var username = req.body.data.username;
+  var password = req.body.data.password;
+  var user = userArray.find(function (user) {
+    return user.username === username;
+  });
+
+  if (user !== undefined && password === user.password) {
+    req.session.authUser = { username: user.username, userid: user.userid, usertype: user.usertype };
+    console.log(req.session.authUser);
+    return res.json({ authUser: req.session.authUser });
+  }
+  res.status(401).json({ error: 'Bad credentials' });
+});
+
+router.post('/logout', function (req, res) {
+  delete req.session.authUser;
+  res.json({ ok: true });
+});
 
 /* GET users listing. */
 router.get('/users', function (req, res, next) {
@@ -295,13 +323,13 @@ router.post('/users/addPatient', bodyParser.json(), function (req, res, next) {
 /* harmony default export */ __webpack_exports__["a"] = (router);
 
 /***/ }),
-/* 7 */
+/* 8 */
 /***/ (function(module, exports) {
 
 module.exports = require("sequelize");
 
 /***/ }),
-/* 8 */
+/* 9 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -315,9 +343,22 @@ var bodyParser = __webpack_require__(2);
 
 var router = Object(__WEBPACK_IMPORTED_MODULE_0_express__["Router"])();
 
+// router.use((req, res, next) => {
+//   if (req.session.authUser && req.session.authUser.usertype === 'doctor') {
+//     next()
+//   } else {
+//     res.status(401).json({ error: 'Bad credentials' })
+//   }
+// })
+
 /* GET prescription listing. */
-router.get('/patient/prescription', function (req, res, next) {
-    var queryPrescription = connection.query('SELECT * FROM prescription', { type: connection.QueryTypes.SELECT });
+router.get('/patient/prescription/:patientid', function (req, res, next) {
+    var patientid = req.params.patientid;
+    var queryPrescription = connection.query('SELECT * FROM prescription WHERE patientid = :patientid', { type: connection.QueryTypes.SELECT,
+        replacements: {
+            patientid: patientid
+        }
+    });
     var queryDoctor = connection.query('SELECT * FROM doctor', { type: connection.QueryTypes.SELECT });
     Promise.all([queryPrescription, queryDoctor]).then(function (result) {
         var doctorMap = {};
@@ -378,9 +419,15 @@ router.get('/patient/prescription', function (req, res, next) {
 });
 
 /* GET referrals listing. */
-router.get('/patient/referral', function (req, res, next) {
-    var referralQueryPromise = connection.query('SELECT * FROM referrals', { type: connection.QueryTypes.SELECT });
+router.get('/patient/referral/:patientid', function (req, res, next) {
+    var patientid = req.params.patientid;
+    var referralQueryPromise = connection.query('SELECT * FROM referrals WHERE patientid = :patientid', { type: connection.QueryTypes.SELECT,
+        replacements: {
+            patientid: patientid
+        }
+    });
     var queryDoctorPromise = connection.query('SELECT * FROM doctor', { type: connection.QueryTypes.SELECT });
+
     Promise.all([referralQueryPromise, queryDoctorPromise]).then(function (result) {
         var doctorMap = {};
         var _iteratorNormalCompletion3 = true;
@@ -461,27 +508,7 @@ router.post('/patient/makeAppointment/:patientid', bodyParser.json(), function (
     var duration = req.body.data.duration;
     var timeFormat = "YYYY/MM/DD HH24:MI";
 
-    var query = 'INSERT INTO Appointments Values (:patientid, :doctorid, TO_TIMESTAMP(:datetime, :timeFormat), :duration)';
-    connection.query(query, {
-        type: connection.QueryTypes.INSERT,
-        replacements: {
-            patientid: patientid,
-            doctorid: doctorid,
-            datetime: datetime,
-            duration: duration,
-            timeFormat: timeFormat
-        }
-    });
-});
-
-router.post('/patient/makeAppointment/:patientid', bodyParser.json(), function (req, res, next) {
-    var patientid = req.params.patientid;
-    var doctorid = req.body.data.doctorid;
-    var datetime = req.body.data.date + ' ' + req.body.data.booktime;
-    var duration = req.body.data.duration;
-    var timeFormat = "YYYY/MM/DD HH24:MI";
-
-    var query = 'INSERT INTO Appointments Values (:patientid, :doctorid, TO_TIMESTAMP(:datetime, :timeFormat), :duration)';
+    var query = 'INSERT INTO appointments Values (:patientid, :doctorid, TO_TIMESTAMP(:datetime, :timeFormat), :duration)';
     connection.query(query, {
         type: connection.QueryTypes.INSERT,
         replacements: {
@@ -506,7 +533,7 @@ router.post('/patient/updateAppointment/:patientid', bodyParser.json(), function
     //PostgreSQL does not support the CHECK command on UPDATE
     // 'CHECK (datetime BETWEEN :today AND 2018-12-31 00:00:01);'
     connection.query(query, {
-        type: connection.QueryTypes.INSERT,
+        type: connection.QueryTypes.UPDATE,
         replacements: {
             patientid: patientid,
             doctorid: doctorid,
@@ -532,10 +559,34 @@ router.post('/patient/cancelAppointment/:patientid', bodyParser.json(), function
     });
 });
 
+router.post('/patient/deleteRecords/:patientid', function (req, res, next) {
+    var patientid = req.params.patientid;
+
+    var query = 'DELETE FROM creates_record WHERE patientid = :patientid';
+    connection.query(query, {
+        type: connection.QueryTypes.DELETE,
+        replacements: {
+            patientid: patientid
+        }
+    }).then(console.log("Records deleted successfully!"));
+});
+
+router.post('/patient/deleteAccount/:patientid', function (req, res, next) {
+    var patientid = req.params.patientid;
+
+    var query = 'DELETE FROM patient WHERE patientid = :patientid';
+    connection.query(query, {
+        type: connection.QueryTypes.DELETE,
+        replacements: {
+            patientid: patientid
+        }
+    }).then(console.log("Account deleted successfully!"));
+});
+
 /* harmony default export */ __webpack_exports__["a"] = (router);
 
 /***/ }),
-/* 9 */
+/* 10 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -621,33 +672,26 @@ router.post('/doctor/addPrescription', bodyParser.json(), function (req, res, ne
     });
 });
 
-// router.post('/doctor/addAppointment', bodyParser.json(), function (req, res, next) {
-//     const patientid = req.body.data.patientid;
-//     const doctorid = req.body.data.doctorid;
-//     const appointmentDateTime = req.body.data.appointmentDateTime;
-//     const duration = req.body.data.duration;
-//
-//
-//
-//     const query = 'INSERT INTO Appointments (patientid, doctorid, appointmentDateTime, duration) VALUES (:patientid, :doctorid, :appointmentDateTime, :duration) ;';
-//     connection.query(query,
-//         {
-//             type: connection.QueryTypes.INSERT,
-//             replacements: {
-//                 patientid: patientid,
-//                 doctorid: doctorid,
-//                 appointmentDateTime: appointmentDateTime,
-//                 duration: duration
-//             }
-//         })
-//         .then(result => {
-//             // result[1] is the number of rows changed
-//             res.send('/doctor/')
-//         })
-// })
-
 router.get('/doctor/dosages', function (req, res, next) {
-    var query = 'SELECT medicationName, max(dosage) FROM Prescription group by medicationName;';
+    var query = 'SELECT medicationName, MAX(dosage) FROM Prescription group by medicationName;';
+    connection.query(query, {
+        type: connection.QueryTypes.SELECT
+    }).then(function (dosages) {
+        res.json(dosages);
+    });
+});
+
+router.get('/doctor/dosagesmin', function (req, res, next) {
+    var query = 'SELECT medicationName, MIN(dosage) FROM Prescription group by medicationName;';
+    connection.query(query, {
+        type: connection.QueryTypes.SELECT
+    }).then(function (dosages) {
+        res.json(dosages);
+    });
+});
+
+router.get('/doctor/dosagesavg', function (req, res, next) {
+    var query = 'SELECT MAX(t.avgdose) FROM (SELECT doctorname, (SELECT MIN(p.dosage) avgdose FROM (SELECT * FROM prescription p WHERE p.doctorid = d.doctorid) p) FROM doctor d) t;';
     connection.query(query, {
         type: connection.QueryTypes.SELECT
     }).then(function (dosages) {
@@ -712,7 +756,7 @@ router.get('/doctor/:username/appointment', function (req, res, next) {
     });
 });
 
-/* GET users listing. */
+/* GET Doctors  sorted by least busy. */
 router.get('/doctors', function (req, res, next) {
     // This query sorts doctors by least busy ie fewest appointments
     var query = 'SELECT *, (SELECT COUNT(*) FROM appointments WHERE doctorid = d.doctorid) as count FROM doctor d ORDER BY count;';
@@ -736,170 +780,6 @@ router.get('/doctor/appointments/:doctorid/:date', bodyParser.json(), function (
     });
 });
 
-router.get('/doctor', function (req, res, next) {
-    var query = 'SELECT * FROM patient;';
-    connection.query(query, { type: connection.QueryTypes.SELECT }).then(function (patients) {
-        console.log(patients);
-        res.json(patients);
-    });
-});
-
-router.post('/doctor/addRec', bodyParser.json(), function (req, res, next) {
-    var recordID = req.body.data.recordID;
-    var dateCreated = req.body.data.dateCreated;
-    var summary = req.body.data.summary;
-    var doctorid = req.body.data.doctorid;
-    var patientid = req.body.data.patientid;
-
-    var query = 'INSERT INTO Creates_Record (recordID, dateCreated, summary, doctorid, patientid) VALUES (:recordID, :dateCreated, :summary, :doctorid, :patientid) ;';
-    connection.query(query, {
-        type: connection.QueryTypes.INSERT,
-        replacements: {
-            recordID: recordID,
-            dateCreated: dateCreated,
-            summary: summary,
-            doctorid: doctorid,
-            patientid: patientid
-        }
-    }).then(function (result) {
-        // result[1] is the number of rows changed
-        res.send('/doctor/');
-    });
-});
-
-router.post('/doctor/addRef', bodyParser.json(), function (req, res, next) {
-    var patientid = req.body.data.patientid;
-    var doctorid = req.body.data.doctorid;
-    var referraldoctorid = req.body.data.referraldoctorid;
-    var referralDate = req.body.data.referralDate;
-
-    var query = 'INSERT INTO Referrals (patientid, doctorid, referraldoctorid, referralDate) VALUES (:patientid, :doctorid, :referraldoctorid, :referralDate) ;';
-    connection.query(query, {
-        type: connection.QueryTypes.INSERT,
-        replacements: {
-            patientid: patientid,
-            doctorid: doctorid,
-            referraldoctorid: referraldoctorid,
-            referralDate: referralDate
-        }
-    }).then(function (result) {
-        // result[1] is the number of rows changed
-        res.send('/doctor/');
-    });
-});
-
-router.post('/doctor/addPrescription', bodyParser.json(), function (req, res, next) {
-    var patientid = req.body.data.patientid;
-    var doctorid = req.body.data.doctorid;
-    var medicationName = req.body.data.medicationName;
-    var dosage = req.body.data.dosage;
-
-    var query = 'INSERT INTO Prescription (patientid, doctorid, medicationName, dosage) VALUES (:patientid, :doctorid, :medicationName, :dosage) ;';
-    connection.query(query, {
-        type: connection.QueryTypes.INSERT,
-        replacements: {
-            patientid: patientid,
-            doctorid: doctorid,
-            medicationName: medicationName,
-            dosage: dosage
-        }
-    }).then(function (result) {
-        // result[1] is the number of rows changed
-        res.send('/doctor/');
-    });
-});
-
-// router.post('/doctor/addAppointment', bodyParser.json(), function (req, res, next) {
-//     const patientid = req.body.data.patientid;
-//     const doctorid = req.body.data.doctorid;
-//     const appointmentDateTime = req.body.data.appointmentDateTime;
-//     const duration = req.body.data.duration;
-//
-//
-//
-//     const query = 'INSERT INTO Appointments (patientid, doctorid, appointmentDateTime, duration) VALUES (:patientid, :doctorid, :appointmentDateTime, :duration) ;';
-//     connection.query(query,
-//         {
-//             type: connection.QueryTypes.INSERT,
-//             replacements: {
-//                 patientid: patientid,
-//                 doctorid: doctorid,
-//                 appointmentDateTime: appointmentDateTime,
-//                 duration: duration
-//             }
-//         })
-//         .then(result => {
-//             // result[1] is the number of rows changed
-//             res.send('/doctor/')
-//         })
-// })
-
-router.get('/doctor/dosages', function (req, res, next) {
-    var query = 'SELECT medicationName, max(dosage) FROM Prescription group by medicationName;';
-    connection.query(query, {
-        type: connection.QueryTypes.SELECT
-    }).then(function (dosages) {
-        res.json(dosages);
-    });
-});
-
-/* GET patient by ID. */
-router.get('/doctor/:username', function (req, res, next) {
-    var patientid = req.params.username;
-    var query = 'SELECT * FROM Patient WHERE patientid = :username ;';
-    connection.query(query, {
-        type: connection.QueryTypes.SELECT,
-        replacements: {
-            username: patientid
-        }
-    }).then(function (user) {
-        if (user.length === 1) {
-            res.json(user[0]);
-        } else {
-            res.status(404).json({});
-        }
-    });
-});
-
-router.get('/doctor/:username/medrec', function (req, res, next) {
-    var patientid = req.params.username;
-    var query = 'SELECT * FROM Patient, Creates_Record WHERE Patient.patientid = :username and Creates_Record.patientid = :username ;';
-    connection.query(query, {
-        type: connection.QueryTypes.SELECT,
-        replacements: {
-            username: patientid
-        }
-    }).then(function (records) {
-        res.json(records);
-    });
-});
-
-router.get('/doctor/:username/prescription', function (req, res, next) {
-    var patientid = req.params.username;
-    var query = 'SELECT * FROM Patient, Prescription WHERE Patient.patientid = :username and Prescription.patientid = :username ;';
-    connection.query(query, {
-        type: connection.QueryTypes.SELECT,
-        replacements: {
-            username: patientid
-        }
-    }).then(function (prescriptions) {
-        res.json(prescriptions);
-    });
-});
-
-router.get('/doctor/:username/appointment', function (req, res, next) {
-    var patientid = req.params.username;
-    var query = 'SELECT * FROM Patient, Appointments WHERE Patient.patientid = :username and Appointments.patientid = :username ;';
-    connection.query(query, {
-        type: connection.QueryTypes.SELECT,
-        replacements: {
-            username: patientid
-        }
-    }).then(function (appointments) {
-        res.json(appointments);
-    });
-});
-
 router.get('/doctor/atAddress/:address', function (req, res, next) {
     var address = req.params.address;
     var query = 'SELECT * FROM doctor WHERE address = :address;';
@@ -916,7 +796,7 @@ router.get('/doctor/atAddress/:address', function (req, res, next) {
 /* harmony default export */ __webpack_exports__["a"] = (router);
 
 /***/ }),
-/* 10 */
+/* 11 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -929,10 +809,91 @@ var bodyParser = __webpack_require__(2);
 
 var router = Object(__WEBPACK_IMPORTED_MODULE_0_express__["Router"])();
 
+router.use(function (req, res, next) {
+  if (req.session.authUser && req.session.authUser.usertype === 'admin') {
+    next();
+  } else {
+    res.status(401).json({ error: 'Bad credentials admin' });
+  }
+});
+
+router.get('/', function (req, res) {
+  var locations = connection.query('SELECT * FROM location;', { type: connection.QueryTypes.SELECT });
+  var doctors = connection.query('SELECT * FROM doctor;', { type: connection.QueryTypes.SELECT });
+  var appointments = connection.query('SELECT * FROM appointments;', { type: connection.QueryTypes.SELECT });
+  var patients = connection.query('SELECT * FROM patient;', { type: connection.QueryTypes.SELECT });
+  var specializations = connection.query('SELECT * FROM specialist;', { type: connection.QueryTypes.SELECT });
+
+  Promise.all([locations, doctors, appointments, patients, specializations]).then(function (result) {
+    res.json({ locations: result[0], doctors: result[1], appointments: result[2], patients: result[3], specializations: result[4] });
+  });
+});
+
+router.get('/getLocations', function (req, res) {
+  connection.query('SELECT * FROM location;', { type: connection.QueryTypes.SELECT }).then(function (result) {
+    res.json({ locations: result });
+  });
+});
+
+router.post('/addPatient', bodyParser.json(), function (req, res) {
+  var age = req.body.data.age;
+  var address = req.body.data.address;
+  var patientname = req.body.data.patientname;
+  var gender = req.body.data.gender;
+  var phonenum = req.body.data.phonenum;
+
+  var query = 'INSERT INTO Patient (age, address, patientname, gender, phonenum) ' + 'VALUES (:age, :address, :patientname, :gender, :phonenum) ;';
+  connection.query(query, {
+    type: connection.QueryTypes.INSERT,
+    replacements: {
+      age: age,
+      address: address,
+      patientname: patientname,
+      gender: gender,
+      phonenum: phonenum
+    }
+  }).then(function (result) {
+    res.json(result);
+  });
+});
+
+router.post('/addDoctor', bodyParser.json(), function (req, res) {
+  var doctorname = req.body.data.doctorname;
+  var address = req.body.data.address;
+  var email = req.body.data.email;
+  var phone = req.body.data.phone;
+
+  var query = 'INSERT INTO Doctor (doctorname, email, phone, address) ' + 'VALUES (:doctorname, :email, :phone, :address) ;';
+  connection.query(query, {
+    type: connection.QueryTypes.INSERT,
+    replacements: {
+      doctorname: doctorname,
+      email: email,
+      address: address,
+      phone: phone
+    }
+  }).then(function (result) {
+    res.json(result);
+  });
+});
+
+router.post('/removePatient/', bodyParser.json(), function (req, res) {
+  var id = req.body.data.patientid;
+  var query = 'DELETE FROM Patient WHERE patientid = :id';
+  connection.query(query, {
+    type: connection.QueryTypes.DELETE,
+    replacements: {
+      id: id
+    }
+  }).then(function (result) {
+    res.json(result);
+  });
+});
+
 /* harmony default export */ __webpack_exports__["a"] = (router);
 
 /***/ }),
-/* 11 */
+/* 12 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -956,7 +917,7 @@ router.get('/location', function (req, res, next) {
 /* harmony default export */ __webpack_exports__["a"] = (router);
 
 /***/ }),
-/* 12 */
+/* 13 */
 /***/ (function(module, exports) {
 
 module.exports = {
