@@ -101,13 +101,16 @@
             this.appointments.splice(index, 1)
           })
         },
-        deleteRecords (patientid) {
-          axios.post('/api/patient/deleteRecords/' + this.$store.getters.getAuthUser.userid)
-          self.$nuxt.$router.go({ path: '../pages', force: true })
+        deleteRecords () {
+          axios.post('/api/patient/deleteRecords/').then(value => {
+            alert(value)
+          }).catch(error => {
+            alert(error)
+          })
         },
-        deleteAccount (patientid) {
-          axios.post('/api/patient/deleteAccount/' + this.$store.getters.getAuthUser.userid)
-          self.$nuxt.$router.go({ path: '../pages', force: true })
+        deleteAccount () {
+          axios.post('/api/patient/deleteAccount/')
+          self.$nuxt.$router.replace({ path: '/', force: true })
         }
       },
 

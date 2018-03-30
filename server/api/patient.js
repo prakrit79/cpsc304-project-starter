@@ -154,9 +154,9 @@ router.post('/patient/deleteRecords/', function (req, res, next) {
         replacements: {
             patientid: patientid,
         }
-    }).then(
-        console.log("Records deleted successfully!")
-    )
+    }).then((response) => {
+        res.json(response)
+    })
 })
 
 router.post('/patient/deleteAccount', function (req, res, next) {
@@ -167,11 +167,9 @@ router.post('/patient/deleteAccount', function (req, res, next) {
         replacements: {
             patientid: patientid,
         }
-    }).then(
-        console.log("Account deleted successfully!")
-    ).catch(
-        console.log("Sorry. Failed to delete")
-    )
+    }).then((response) => {
+        res.json(response)
+    })
 })
 
 export default router
