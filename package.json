@@ -10,7 +10,7 @@
     "heroku-postbuild": "npm run build",
     "dev": "backpack dev",
     "build": "nuxt build && backpack build",
-    "start": "nuxt start"
+    "start": "cross-env NODE_ENV=production node main.js"
   },
   "dependencies": {
     "@nuxtjs/pwa": "^1.0.2",
