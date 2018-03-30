@@ -25,7 +25,7 @@
             </div>
             <div class="subsection">
                 <div style="margin: 25px 10px;">
-                    <span class="subsection-title" style="vertical-align: middle;">Max Dosage of Min Prescription of Any Drug Sorted by Doctor</span>
+                    <span class="subsection-title" style="vertical-align: middle;">Max Dosage of Average Prescription of Any Drug Sorted by Doctor</span>
                 </div>
                 <ul style="list-style-type: none; padding: 0; margin: 0;">
                     <li v-for="(patient, patientid) in dosagesavg" :key="patientid" style="padding: 10px 20px; margin: 0 25px; position: relative;">
