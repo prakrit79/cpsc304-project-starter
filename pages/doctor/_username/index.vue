@@ -13,10 +13,14 @@
                         <span class="referral-patientid">Patient ID: </span>
                         <input type="number" v-model="patientid"/>
                     </div>
-                    <div style="margin: 10px 0;">
-                        <span class="referral-rdoctorid">Referral Doctor ID: </span>
-                        <input type="number" v-model="referraldoctorid"/>
-                    </div>
+                    <span class="referral-rdoctorid">Referral Doctor: </span>
+                    <select v-model="referraldoctorid">
+                        {{doctors[0].doctorname}}
+                        <option disabled value="">Please select one</option>
+                        <option v-for="doctor in doctors" v-bind:value="doctor.doctorid">
+                            {{doctor.doctorname}}
+                        </option>
+                    </select>
                     <div style="margin: 10px 0;">
                         <span class="referral-referraldate">Referral Date: </span>
                         <input type="date" v-model="referralDate"/>
@@ -30,8 +34,8 @@
                     <nuxt-link class="button--grey link" style="margin-left: 15px;" :to="{ path: `/doctor/${user.patientid}/medrec`, params: { username: user.patientname, id: user.patientid }}">
                        Medical Record
                     </nuxt-link>
-                    <nuxt-link class="button--grey link" style="margin-left: 15px;" :to="{ path: `/doctor/${user.patientid}/prescription`, params: { username: user.patientname }}">Prescriptions</nuxt-link>
-                    <nuxt-link class="button--grey link" style="margin-left: 15px;" :to="{ path: `/doctor/${user.patientid}/appointment`, params: { username: user.patientname }}">Appointments</nuxt-link>
+                    <nuxt-link class="button--grey link" style="margin-left: 15px;" :to="{ path: `/doctor/${user.patientid}/prescription`, params: { username: user.patientname, patientid: user.patientid }}">Prescriptions</nuxt-link>
+                    <nuxt-link class="button--grey link" style="margin-left: 15px;" :to="{ path: `/doctor/${user.patientid}/appointment`, params: { username: user.patientname, patientid: user.patientid }}">Appointments</nuxt-link>
                 </div>
             </div>
         </div>
@@ -46,10 +50,14 @@
         return {
           patientid: '',
           referraldoctorid: '',
-          referralDate: ''
+          referralDate: '',
+          doctors: {}
         }
       },
 
+      created: function () {
+        this.patientid = this.$route.params.username
+      },
       methods: {
         submitInsert () {
           let self = this
@@ -75,10 +83,11 @@
         }
       },
       name: 'username',
-      asyncData ({ params, error }) {
+      async asyncData ({ params, error }) {
+        let doctorData = await axios.get('/api/doctors')
         return axios.get('/api/doctor/' + params.username)
           .then((res) => {
-            return { user: res.data }
+            return { user: res.data, doctors: doctorData.data }
           })
           .catch((e) => {
             error({ statusCode: 404, message: 'User not found' })

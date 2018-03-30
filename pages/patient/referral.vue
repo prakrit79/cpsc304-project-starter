@@ -19,8 +19,8 @@
     import axios from '~/plugins/axios'
     export default {
       middleware: 'check-patient',
-      async asyncData ({store}) {
-        let { data } = await axios.get('/api/patient/referral/' + store.getters.getAuthUser.userid)
+      async asyncData () {
+        let { data } = await axios.get('/api/patient/referral')
         return {referralsAndDoctors: data}
       },
       head () {

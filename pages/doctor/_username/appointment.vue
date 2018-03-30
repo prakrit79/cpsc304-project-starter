@@ -7,33 +7,12 @@
                 </div>
                 <ul style="list-style-type: none; padding: 0; margin: 0;">
                     <li v-for="(patient, patientid) in appointments" :key="patientid" style="padding: 10px 20px; margin: 0 25px; position: relative;">
-                        {{'Appointment Date Time: '+ patient.appointmentdatetime}}
+                        {{'Appointment Date Time: '+ patient.date + ' ' + patient.aptime }}
                         <br>
-                        {{'Duration: ' + patient.duration}}
+                        {{'Duration hours: ' + patient.duration}}
                     </li>
                 </ul>
             </div>
-            <!--<div class="subsection">-->
-                <!--<form style="margin: 15px 15px;">-->
-                    <!--<div style="margin: 10px 0;">-->
-                        <!--<span class="appointment-patientid">Patient ID: </span>-->
-                        <!--<input type="number" v-model="patientid"/>-->
-                    <!--</div>-->
-                    <!--<div style="margin: 10px 0;">-->
-                        <!--<span class="appointment-doctorid">Doctor ID: </span>-->
-                        <!--<input type="number" v-model="doctorid"/>-->
-                    <!--</div>-->
-                    <!--<div style="margin: 10px 0;">-->
-                        <!--<span class="appointment-appointmentDateTime">Appointment Date Time: </span>-->
-                        <!--<input type="datetime" v-model="appointmentDateTime"/>-->
-                    <!--</div>-->
-                    <!--<div style="margin: 10px 0;">-->
-                        <!--<span class="appointment-duration">Duration: </span>-->
-                        <!--<input type="number" v-model="duration"/>-->
-                    <!--</div>-->
-                <!--</form>-->
-                <!--<button type="button" class="button&#45;&#45;grey" @click="submitInsert">Add Appointment</button>-->
-            <!--</div>-->
         </div>
     </section>
 </template>
@@ -42,45 +21,9 @@
     import axios from '~/plugins/axios'
 
     export default {
-      // data: function () {
-      //   return {
-      //     patientid: '',
-      //     doctorid: '',
-      //     appointmentDateTime: '',
-      //     duration: ''
-      //   }
-      // },
-      //
-      // methods: {
-      //   submitInsert: function () {
-      //     let self = this
-      //
-      //     axios.post('/api/doctor/addAppointment', {
-      //       headers:
-      //                 {
-      //                   'Content-Type': 'application/json'
-      //                 },
-      //       data:
-      //                 {
-      //                   patientid: self.patientid,
-      //                   doctorid: self.doctorid,
-      //                   appointmentDateTime: self.appointmentDateTime,
-      //                   duration: self.duration
-      //                 }
-      //     })
-      //       .then((res) => {
-      //         // res.data should contain the url for redirecting... bad practice
-      //         self.$nuxt.$router.replace({path: res.data})
-      //       })
-      //       .catch((e) => {
-      //         console.log(e)
-      //       })
-      //   }
-      // },
-
       name: 'username',
       asyncData ({ params, error }) {
-        return axios.get('/api/doctor/' + params.username + '/appointment')
+        return axios.get('/api/patient/appointments/' + params.username)
           .then((res) => {
             return { appointments: res.data }
           })
