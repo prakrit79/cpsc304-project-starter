@@ -18,8 +18,8 @@
 <script>
     import axios from '~/plugins/axios'
     export default {
-      async asyncData ({store}) {
-        let { data } = await axios.get('/api/patient/prescription/')
+      async asyncData () {
+        let { data } = await axios.get('/api/patient/prescription')
         return { prescriptionsAndDoctors: data }
       },
       head () {
