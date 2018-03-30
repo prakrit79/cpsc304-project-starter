@@ -135,7 +135,7 @@ router.get('/doctor/dosagesmin', function (req, res, next) {
 })
 
 router.get('/doctor/dosagesavg', function (req, res, next) {
-    const query = 'SELECT MAX(t.avgdose) FROM (SELECT doctorname, (SELECT MIN(p.dosage) avgdose FROM (SELECT * FROM prescription p WHERE p.doctorid = d.doctorid) p) FROM doctor d) t;'
+    const query = 'SELECT MAX(t.avgdose) FROM (SELECT doctorname, (SELECT AVG(p.dosage) avgdose FROM (SELECT * FROM prescription p WHERE p.doctorid = d.doctorid) p) FROM doctor d) t;'
     connection.query(query,
         {
             type: connection.QueryTypes.SELECT,
