@@ -2,6 +2,7 @@
   <section class="container">
     <div>
       <div class="links">
+          <div class="title">Clinic Database</div>
           <div style="margin: 10px 0;">
               <span>Username: </span>
               <input type="text" v-model="username"/>
