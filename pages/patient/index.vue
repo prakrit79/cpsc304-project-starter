@@ -42,8 +42,8 @@
                     Account options
                 </H3>
                 <br>
-                <button type="button" class="button--grey" v-on:click='deleteRecords(128)' style="flex: 10%">delete my records</button>
-                <button type="button" class="button--grey" v-on:click='deleteAccount(128)' style="flex: 10%">delete my account</button>
+                <button type="button" class="button--grey" v-on:click='deleteRecords()' style="flex: 10%">delete my records</button>
+                <button type="button" class="button--grey" v-on:click='deleteAccount()' style="flex: 10%">delete my account</button>
             </div>
         </div>
     </section>

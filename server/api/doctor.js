@@ -45,7 +45,7 @@ router.post('/doctor/addRec', bodyParser.json(), function (req, res, next) {
     const recordID = req.body.data.recordID;
     const dateCreated = req.body.data.dateCreated;
     const summary = req.body.data.summary;
-    const doctorid = req.body.data.doctorid;
+    const doctorid = req.session.authUser.userid;
     const patientid = req.body.data.patientid;
 
     const query = 'INSERT INTO Creates_Record (recordID, dateCreated, summary, doctorid, patientid) VALUES (:recordID, :dateCreated, :summary, :doctorid, :patientid) ;';
@@ -68,7 +68,7 @@ router.post('/doctor/addRec', bodyParser.json(), function (req, res, next) {
 
 router.post('/doctor/addRef', bodyParser.json(), function (req, res, next) {
     const patientid = req.body.data.patientid;
-    const doctorid = req.body.data.doctorid;
+    const doctorid = req.session.authUser.userid;
     const referraldoctorid = req.body.data.referraldoctorid;
     const referralDate = req.body.data.referralDate;
 
@@ -91,7 +91,7 @@ router.post('/doctor/addRef', bodyParser.json(), function (req, res, next) {
 
 router.post('/doctor/addPrescription', bodyParser.json(), function (req, res, next) {
     const patientid = req.body.data.patientid;
-    const doctorid = req.body.data.doctorid;
+    const doctorid = req.session.authUser.userid;
     const medicationName = req.body.data.medicationName;
     const dosage = req.body.data.dosage;
 
@@ -176,6 +176,7 @@ router.get('/doctor/:username/medrec', function (req, res, next) {
             }
         })
         .then(records => {
+                console.log(records)
                 res.json(records)
         })
 })
@@ -191,6 +192,7 @@ router.get('/doctor/:username/prescription', function (req, res, next) {
             }
         })
         .then(prescriptions => {
+            console.log(prescriptions)
             res.json(prescriptions)
         })
 })
