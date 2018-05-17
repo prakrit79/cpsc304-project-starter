@@ -1,8 +1,7 @@
 # CPSC304
 
-## Demo
-*Live Demo*: https://304demoproject-ejhdpgkdmg.now.sh/
-![alt text](demo.gif "Demo")
+## Live Page Link
+https://cryptic-gorge-69570.herokuapp.com
 
 ## Be Warned!
 
